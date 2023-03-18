@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .active {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left_area">
+        <table>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <td>항목명</td>
+              <td>항목구분</td>
+              <td>검증항목</td>
+              <td>등록자</td>
+              <td>등록일시</td>
+            </tr>
+          </thead>
+          <tbody id="itemList_tbody">
+            <tr class="active" data-tablelistuid="1054329E3270C06$12">
+              <td>자바스크립트</td>
+              <td>타입스크립트</td>
+              <td>리액트</td>
+              <td>리액트 타입스크립트</td>
+              <td>넥스트js</td>
+            </tr>
+            <tr class="active" data-tablelistuid="230113Q10W44T81EY1">
+              <td>자바스크립트</td>
+              <td>타입스크립트</td>
+              <td>리액트</td>
+              <td>리액트 타입스크립트</td>
+              <td>넥스트js</td>
+            </tr>
+            <tr class="active" data-tablelistuid="3Q1R14T1034EB2W452">
+              <td>자바스크립트</td>
+              <td>타입스크립트</td>
+              <td>리액트</td>
+              <td>리액트 타입스크립트</td>
+              <td>넥스트js</td>
+            </tr>
+            <tr data-tablelistuid="43WQA11024B433R2U3">
+              <td>유저텍스트5-1</td>
+              <td>유저텍스트5-2</td>
+              <td>유저텍스트5-3</td>
+              <td>유저텍스트5-4</td>
+              <td>유저텍스트5-5</td>
+            </tr>
+            <tr data-tablelistuid="5Q341Y11A1453BW2N4">
+              <td>유저텍스트6-1</td>
+              <td>유저텍스트6-2</td>
+              <td>유저텍스트6-3</td>
+              <td>유저텍스트6-4</td>
+              <td>유저텍스트6-5</td>
+            </tr>
+            <tr data-tablelistuid="634BA7Y10546B53N55">
+              <td>유저텍스트7-1</td>
+              <td>유저텍스트7-2</td>
+              <td>유저텍스트7-3</td>
+              <td>유저텍스트7-4</td>
+              <td>유저텍스트7-5</td>
+            </tr>
+            <tr data-tablelistuid="Y35Q1Y110W47N6R266">
+              <td>유저텍스트8-1</td>
+              <td>유저텍스트8-2</td>
+              <td>유저텍스트8-3</td>
+              <td>유저텍스트8-4</td>
+              <td>유저텍스트8-5</td>
+            </tr>
+            <tr data-tablelistuid="8367191T07W86BR277">
+              <td>유저텍스트9-1</td>
+              <td>유저텍스트9-2</td>
+              <td>유저텍스트9-3</td>
+              <td>유저텍스트9-4</td>
+              <td>유저텍스트9-5</td>
+            </tr>
+            <tr data-tablelistuid="93QB1A1T04427W32N8">
+              <td>유저텍스트10-1</td>
+              <td>유저텍스트10-2</td>
+              <td>유저텍스트10-3</td>
+              <td>유저텍스트10-4</td>
+              <td>유저텍스트10-5</td>
+            </tr>
+            <tr data-tablelistuid="5R87103A0248RBW292">
+              <td>유저텍스트11-1</td>
+              <td>유저텍스트11-2</td>
+              <td>유저텍스트11-3</td>
+              <td>유저텍스트11-4</td>
+              <td>유저텍스트11-5</td>
+            </tr>
+            <tr data-tablelistuid="43Y8101T014A23W003">
+              <td>유저텍스트12-1</td>
+              <td>유저텍스트12-2</td>
+              <td>유저텍스트12-3</td>
+              <td>유저텍스트12-4</td>
+              <td>유저텍스트12-5</td>
+            </tr>
+            <tr data-tablelistuid="33Q310W10542RB53C7">
+              <td>유저텍스트13-1</td>
+              <td>유저텍스트13-2</td>
+              <td>유저텍스트13-3</td>
+              <td>유저텍스트13-4</td>
+              <td>유저텍스트13-5</td>
+            </tr>
+            <tr data-tablelistuid="2T04W11B052AR27026">
+              <td>유저텍스트14-1</td>
+              <td>유저텍스트14-2</td>
+              <td>유저텍스트14-3</td>
+              <td>유저텍스트14-4</td>
+              <td>유저텍스트14-5</td>
+            </tr>
+            <tr data-tablelistuid="23W2R01T0A41wB2731">
+              <td>유저텍스트14-1</td>
+              <td>유저텍스트14-2</td>
+              <td>유저텍스트14-3</td>
+              <td>유저텍스트14-4</td>
+              <td>유저텍스트14-5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="control_button">
+        <button type="button" id="add-contents">추가</button>
+        <button type="button" id="delete-contents">삭제</button>
+        <button type="button" id="move-up-item">위로이동</button>
+        <button type="button" id="move-down-item">아래로이동</button>
+      </div>
+      <div class="right_area">
+        <table>
+          <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <td>항목명</td>
+              <td>항목구분</td>
+              <td>검증항목</td>
+              <td>등록자</td>
+              <td>등록일시</td>
+            </tr>
+          </thead>
+          <tbody class="target">
+            <tr>
+              <td>기존텍스트1-1</td>
+              <td>기존텍스트1-2</td>
+              <td>기존텍스트1-3</td>
+              <td>기존텍스트1-4</td>
+              <td>기존텍스트1-5</td>
+            </tr>
+            <tr>
+              <td>기존텍스트2-1</td>
+              <td>기존텍스트2-2</td>
+              <td>기존텍스트2-3</td>
+              <td>기존텍스트2-4</td>
+              <td>기존텍스트2-5</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="src/index.js"></script>
+  </body>
+</html>
