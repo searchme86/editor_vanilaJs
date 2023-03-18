@@ -96,11 +96,4 @@ addButton.addEventListener('click', function () {
   console.log('something', something);
 
   target.insertAdjacentHTML('beforeend', something);
-
-  // // 선택한 아이템이 있는 배열을 순해해서 새로운 tr을 만듦
-  // const TrRowsToAdd = checkedRowInfo.map((item) => {
-  //   return `<tr data-tablelistuid="${item.tablelistuid}"><td>${item.category}</td><td>${item.categoryTell}</td><td>${item.categoryVerify}</td><td>${item.uploader}</td><td>${item.dateToUpload}</td></tr>`;
-  // });
-
-  // console.log('TrRowsToAdd', TrRowsToAdd);
 });
