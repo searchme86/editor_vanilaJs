@@ -56,30 +56,15 @@ function RenderingTableTbody(selectedData) {
       `;
   });
 
+  console.log('renderedTableRow', renderedTableRow);
   if (!renderedTableRow.length) return;
 
+  //Todo
+  //tbody가 1개 이상일때, 그 전에다가 append 할 수 있도록
   const tbody = document.createElement('tbody');
   tbody.innerHTML = renderedTableRow.join('');
 
   return tbody;
-}
-
-function excludeDuplicatedData() {
-  // duplicatedRawData.reduce((acc, cur) => acc.includes(cur.tablelistuid) ? acc : [...acc, cur],[])
-  console.log('createdRightTableData', createdRightTableData);
-  console.log(
-    'initialExistedRightTableDataArray',
-    initialExistedRightTableDataArray
-  );
-
-  const filteredAndUniqueData = createdRightTableData.filter(
-    (obj, index) =>
-      createdRightTableData.findIndex(
-        (item) => item.tablelistuid === obj.tablelistuid
-      ) === index
-  );
-  console.log('filteredAndUniqueData', filteredAndUniqueData);
-  return filteredAndUniqueData;
 }
 
 // ===================================================>
@@ -118,14 +103,15 @@ moveRightButton.addEventListener('click', () => {
   previousData.push(...createdRightTableData);
 
   console.log('previousData', previousData);
+
+  //Todo
   // 중복을 삭제한다.
-  const uniqueDataList = excludeDuplicatedData();
 
   // 오른쪽 테이블의 tbody를 삭제하고
   initialTBody.remove();
 
   // 데이터를 가지고 tbody를 만든다.
-  const result = RenderingTableTbody(uniqueDataList);
+  const result = RenderingTableTbody(createdRightTableData);
 
   //만약 tbody가 없다면, 즉 유저가 클릭한 아이템이 없어서 만들 tbody가 없다면, 종료하라
   if (result === undefined) return;
