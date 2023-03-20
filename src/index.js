@@ -43,6 +43,8 @@ function clickAndAddClass(){
   let rows = LeftTable.getElementsByTagName("tr");
   for(let i=0; i < rows.length; i++ ){
     rows[i].addEventListener('click', function(){
+console.log('nodeName', this.parentNode.nodeName)
+      if(String(this.parentNode.nodeName)==='THEAD') return;
       this.classList.add('active')
     })
  }
