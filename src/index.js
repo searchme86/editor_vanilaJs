@@ -23,6 +23,10 @@ let mockDataFromServer = [];
 let selectedData = [];
 let rightTableRowData=[]
 
+
+
+
+
 //완료
 //테이블 tr을 돔으로 만드는 함수
 function RenderingTableRowDom( selectedData ){
@@ -55,7 +59,19 @@ function clickItemsAndAddClass(){
 //data-tablelistuid기준으로 중복된 상품이 있는지 확인하고
 //중복된 상품은 지우는 함수
 //중복이 없는 데이터로의 돔을 만드는 함수
-function excludeDuplicatedRow(rows){
+function excludeDuplicatedRow(duplicatedDataList){
+
+  //duplicatedDataList
+  //중복이 있는 데이터의 리스트
+
+console.log('duplicatedData',duplicatedDataList)
+
+// duplicatedDataList.reduce((acc, cur) => acc.includes(cur.tablelistuid) ? acc : [...acc, cur],[])
+const unique = duplicatedDataList.filter((obj, index)=>duplicatedDataList.findIndex((item)=> item.tablelistuid === obj.tablelistuid  ) === index )
+
+console.log('unique',unique)
+
+
 }
 
 //완료
@@ -126,15 +142,36 @@ function deleteOldThenRenderLeftTable(newRowData) {
 
 
 //완료
-function createRightTableData(rows){
-let existingRightTableData=[];
+function createRightTableData(userClickedItmemList){
 
-  //기존의 오른쪽 테이블 TR 데이터 배열
+  let existingRightTableData=[];
+  let newGeneratedRightTableData = []
+
   Array.prototype.slice.call(ExistingRightTableRows).forEach((tableTr) => {
     existingRightTableData.push(convertToTableObj(tableTr));
   });
 
-  let newGeneratedRightTableData  = [...existingRightTableData, ...rows ]
+  newGeneratedRightTableData  = [...existingRightTableData, ...userClickedItmemList  ]
+
+
+if(window.localStorage.getItem('previous')){
+  console.log('previous',JSON.parse(window.localStorage.getItem('previous')))
+  let recreated = [...JSON.parse(window.localStorage.getItem('previous')), ...newGeneratedRightTableData ]
+
+  //작성중
+excludeDuplicatedRow(recreated);
+
+
+  window.localStorage.removeItem('previous' )
+  window.localStorage.setItem('previous',JSON.stringify(newGeneratedRightTableData) )
+  console.log('recreated',recreated)
+
+
+
+
+}
+
+window.localStorage.setItem('previous',JSON.stringify(newGeneratedRightTableData) )
 
   console.log('newGeneratedRightTableData', newGeneratedRightTableData)
   return newGeneratedRightTableData
@@ -157,6 +194,12 @@ function renderRightTable(selectedData) {
     //오른쪽 테이블의 데이터로 만드는 함수
 
   let rightTableData = createRightTableData(selectedData);
+
+
+
+
+
+
 
     selectedData=[];
 
