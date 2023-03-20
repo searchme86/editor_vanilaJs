@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>clickItemtomoveToRightToLeft_Table Selection</title>
+    <style>
+      .selected {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="left-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lion</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Tiger</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Bear</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Elephant</td>
+          <td>1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="button-container">
+      <button id="move-right-button">&gt;</button>
+      <button id="move-left-button">&lt;</button>
+    </div>
+
+    <table id="right-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Giraffe</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Monkey</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // Get references to the left and right tables and the buttons.
+      const leftTable = document.getElementById('left-table');
+      const rightTable = document.getElementById('right-table');
+      const moveRightButton = document.getElementById('move-right-button');
+      const moveLeftButton = document.getElementById('move-left-button');
+
+      // Add event listeners to the left table rows to allow for multi-select and highlight selected rows.
+      leftTable.querySelectorAll('tbody tr').forEach((row) => {
+        row.addEventListener('click', () => {
+          row.classList.toggle('selected');
+        });
+      });
+
+      // Add an event listener to the move right button to move selected rows to the right table.
+      moveRightButton.addEventListener('click', () => {
+        // Get the selected rows from the left table.
+        const selectedRows = Array.from(
+          leftTable.querySelectorAll('.selected')
+        );
+
+        // Move the selected rows to the right table and remove the selected class.
+        selectedRows.forEach((row) => {
+          rightTable.querySelector('tbody').appendChild(row);
+          row.classList.remove('selected');
+        });
+      });
+
+      // Add an event listener to the move left button to move selected rows to the left table.
+      moveLeftButton.addEventListener('click', () => {
+        // Get the selected rows from the right table.
+        const selectedRows = Array.from(
+          rightTable.querySelectorAll('.selected')
+        );
+
+        // Move the selected rows to the left table and remove the selected class.
+        selectedRows.forEach((row) => {
+          leftTable.querySelector('tbody').appendChild(row);
+          row.classList.remove('selected');
+        });
+      });
+    </script>
+  </body>
+</html>

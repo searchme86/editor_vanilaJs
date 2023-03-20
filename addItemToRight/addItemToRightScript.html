@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>addItemToRight</title>
+    <style>
+      .container {
+        display: flex;
+      }
+
+      .left-table {
+        flex: 1;
+        margin-right: 20px;
+      }
+
+      .right-table {
+        flex: 1;
+        margin-left: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        font-weight: bold;
+      }
+
+      .active {
+        background-color: #f5f5f5;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #add-btn {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #add-btn:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-table">
+        <table id="table-left">
+          <thead>
+            <tr>
+              <th>Table List UID</th>
+              <th>Category</th>
+              <th>Category Tell</th>
+              <th>Category Verify</th>
+              <th>Uploader</th>
+              <th>Date to Upload</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="buttons">
+        <button id="add-btn">Add</button>
+      </div>
+      <div class="right-table">
+        <table id="table-right">
+          <thead>
+            <tr>
+              <th>Table List UID</th>
+              <th>Category</th>
+              <th>Category Tell</th>
+              <th>Category Verify</th>
+              <th>Uploader</th>
+              <th>Date to Upload</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="clickAddBtnToLeftItemMove.js"></script>
+  </body>
+</html>
