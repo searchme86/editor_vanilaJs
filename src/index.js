@@ -21,7 +21,7 @@ let mockDataFromServer = [];
 let selectedData = [];
 
 
-//추가
+//완료
 function RenderingTableRow( selectedData ){
  const renderedTableRow = selectedData.map((checked) => {
     return `
@@ -34,7 +34,6 @@ function RenderingTableRow( selectedData ){
         </tr>
       `;
   });
-
   return renderedTableRow
 }
 
@@ -71,7 +70,7 @@ function convertToTableObj(tableRow) {
 }
 
 
-//완료
+//전체 데이터를 가져와서 빈 배열에 저장하는 함수
 function initializeRowData(rowList) {
   let rowDataList = [];
   rowList.forEach((tableTr) => {
@@ -118,27 +117,35 @@ function deleteOldThenRenderLeftTable(newRowData) {
 
 //변경중
 function renderRightTable(selectedData) {
-
-RenderingTableRow(selectedData)
+   if (!selectedData || selectedData.length === 0) return;
+    RenderingTableRow(selectedData)
     RightTable.insertAdjacentHTML('beforeend', RenderingTableRow(selectedData).join(' '));
+    selectedData=[];
+
+    TableRowListFromServer.forEach((tableTr) => {
+      tableTr.classList.remove('active')
+
+    });
+
   return;
 }
 
-function onClickAddThenRerenderTable(apiData, selected) {
-  if (!selected || selected.length === 0) return;
 
-  // some 을 활용한 id 체크
-  const filteredData = apiData.filter(
-    (data) =>
-      !selected.some((selected) => selected.tablelistuid === data.tablelistuid)
-  );
+// function onClickAddThenRerenderTable(selected) {
+//   if (!selected || selected.length === 0) return;
 
-  // deleteOldThenRenderLeftTable(filteredData);
-  renderRightTable(selected);
+//   // some 을 활용한 id 체크
+//   // const filteredData = apiData.filter(
+//   //   (data) =>
+//   //     !selected.some((selected) => selected.tablelistuid === data.tablelistuid)
+//   // );
 
-  // selected data를 초기화
-  return [];
-}
+//   // deleteOldThenRenderLeftTable(filteredData);
+//   renderRightTable(selected);
+
+//   // selected data를 초기화
+//   return [];
+// }
 
 
 
@@ -203,7 +210,8 @@ AddButton.addEventListener('click', function () {
   // selectedData = initializeSelectedData(TableRowListFromServer);
   // console.log('Selected',selectedData)
 
-  selectedData = onClickAddThenRerenderTable(mockDataFromServer, initializeSelectedData(TableRowListFromServer));
+  selectedData = renderRightTable(initializeSelectedData(TableRowListFromServer));
+  //   selectedData = onClickAddThenRerenderTable(mockDataFromServer, initializeSelectedData(TableRowListFromServer));
 
   return;
 });
