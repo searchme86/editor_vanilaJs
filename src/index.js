@@ -24,9 +24,6 @@ let selectedData = [];
 let rightTableRowData=[]
 
 
-
-
-
 //완료
 //테이블 tr을 돔으로 만드는 함수
 function RenderingTableRowDom( selectedData ){
@@ -59,19 +56,14 @@ function clickItemsAndAddClass(){
 //data-tablelistuid기준으로 중복된 상품이 있는지 확인하고
 //중복된 상품은 지우는 함수
 //중복이 없는 데이터로의 돔을 만드는 함수
-function excludeDuplicatedRow(duplicatedDataList){
 
-  //duplicatedDataList
-  //중복이 있는 데이터의 리스트
-
-console.log('duplicatedData',duplicatedDataList)
-
-// duplicatedDataList.reduce((acc, cur) => acc.includes(cur.tablelistuid) ? acc : [...acc, cur],[])
-const unique = duplicatedDataList.filter((obj, index)=>duplicatedDataList.findIndex((item)=> item.tablelistuid === obj.tablelistuid  ) === index )
-
-console.log('unique',unique)
-
-
+//!수정
+//중복되지 않는 데이터를 넣을 경우도 고려!!!해야함!!
+function excludeDuplicatedData(duplicatedRawData){
+  // duplicatedRawData.reduce((acc, cur) => acc.includes(cur.tablelistuid) ? acc : [...acc, cur],[])
+  const filteredAndUniqueData = duplicatedRawData.filter((obj, index)=>duplicatedRawData.findIndex((item)=> item.tablelistuid === obj.tablelistuid  ) === index )
+  console.log('filteredAndUniqueData',filteredAndUniqueData)
+  return filteredAndUniqueData
 }
 
 //완료
@@ -141,7 +133,33 @@ function deleteOldThenRenderLeftTable(newRowData) {
 }
 
 
-//완료
+// 추가
+// 기존의 돔을 지우고,
+// 그릴 돔의 위치와 데이터를 인자로 넣으면 테이블을 리렌더링(그려주는) 하는 함수
+
+
+function removePreviousAndRerenderingTable(positionToRemoveArea, targetTable, dataToRender, idName){
+  const areaItemTobeRemoved = document.querySelector(positionToRemoveArea);
+  const targetTableContainer = document.querySelector(targetTable);
+  const tbody = document.createElement('tbody');
+
+  console.log('removePreviousAndRerenderingTable, areaItemTobeRemoved', areaItemTobeRemoved)
+  console.log('removePreviousAndRerenderingTable, targetTableContainer', targetTableContainer)
+  console.log('렌더링된 데이터',RenderingTableRowDom(dataToRender).join(' '))
+
+  areaItemTobeRemoved.remove();
+
+  tbody.setAttribute('id', idName);
+  tbody.innerHTML = RenderingTableRowDom(dataToRender).join(' ')
+  console.log('removePreviousAndRerenderingTable, tbody', tbody)
+  targetTableContainer.appendChild(tbody)
+
+  return;
+
+}
+
+
+//작성중
 function createRightTableData(userClickedItmemList){
 
   let existingRightTableData=[];
@@ -153,32 +171,29 @@ function createRightTableData(userClickedItmemList){
 
   newGeneratedRightTableData  = [...existingRightTableData, ...userClickedItmemList  ]
 
-
+//windowlocalstorage를 통해서 최신데이터를 생성
 if(window.localStorage.getItem('previous')){
   console.log('previous',JSON.parse(window.localStorage.getItem('previous')))
   let recreated = [...JSON.parse(window.localStorage.getItem('previous')), ...newGeneratedRightTableData ]
 
-  //작성중
-excludeDuplicatedRow(recreated);
+  //현재 작성중 여기까지
+  excludeDuplicatedData(recreated);
 
+  removePreviousAndRerenderingTable('.target', '.right_area > table', excludeDuplicatedData(recreated), 'newCreated' )
+
+  // renderRightTable(excludeDuplicatedData(recreated))
 
   window.localStorage.removeItem('previous' )
   window.localStorage.setItem('previous',JSON.stringify(newGeneratedRightTableData) )
   console.log('recreated',recreated)
 
-
-
-
 }
-
 window.localStorage.setItem('previous',JSON.stringify(newGeneratedRightTableData) )
 
   console.log('newGeneratedRightTableData', newGeneratedRightTableData)
   return newGeneratedRightTableData
 
 }
-
-
 
 
 //완료
@@ -193,12 +208,7 @@ function renderRightTable(selectedData) {
     //새롭게 버튼, 추가로 생성된 데이터를 함께 모아
     //오른쪽 테이블의 데이터로 만드는 함수
 
-  let rightTableData = createRightTableData(selectedData);
-
-
-
-
-
+  // let rightTableData = createRightTableData(selectedData);
 
 
     selectedData=[];
@@ -209,17 +219,6 @@ function renderRightTable(selectedData) {
 
   return;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // function onClickAddThenRerenderTable(selected) {
 //   if (!selected || selected.length === 0) return;
@@ -277,23 +276,13 @@ function renderRightTable(selectedData) {
 // }
 
 
-
-
-
-
-
-
-
 mockDataFromServer = initializeRowData(TableRowListFromServer);
 
 // 상품 추가하기
 AddButton.addEventListener('click', function () {
-  selectedData = renderRightTable(createSeletedData(TableRowListFromServer));
+  selectedData = createRightTableData(createSeletedData(TableRowListFromServer));
   return;
 });
-
-
-
 
 console.log('ExistingRightTableRows ', ExistingRightTableRows );
 
@@ -318,6 +307,7 @@ console.log('ExistingRightTableRows ', ExistingRightTableRows );
 
 ( function(){
 
+   window.localStorage.clear( )
   clickItemsAndAddClass();
 
 })()
