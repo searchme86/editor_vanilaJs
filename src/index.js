@@ -1,4 +1,6 @@
 const RightTable = document.querySelector('.right_area .target');
+const ExistingRightTableRows = document.querySelectorAll('.right_area .target tr')
+
 const LeftTable = document.querySelector('.left_area table');
 const LeftTableHead = document.querySelector('.left_area table thead');
 const LeftTableTbody = document.getElementById('itemList_tbody');
@@ -19,10 +21,11 @@ const tableColumnTitle = [
 
 let mockDataFromServer = [];
 let selectedData = [];
-
+let rightTableRowData=[]
 
 //완료
-function RenderingTableRow( selectedData ){
+//테이블 tr을 돔으로 만드는 함수
+function RenderingTableRowDom( selectedData ){
  const renderedTableRow = selectedData.map((checked) => {
     return `
       <tr data-tablelistuid="${checked.tablelistuid}">
@@ -37,24 +40,29 @@ function RenderingTableRow( selectedData ){
   return renderedTableRow
 }
 
-
 //완료
-function clickAndAddClass(){
-  let rows = LeftTable.getElementsByTagName("tr");
-  for(let i=0; i < rows.length; i++ ){
-    rows[i].addEventListener('click', function(){
-console.log('nodeName', this.parentNode.nodeName)
+//클래스 active를 넣는 함수
+function clickItemsAndAddClass(){
+  let tableRows = LeftTable.getElementsByTagName("tr");
+  for(let i=0; i < tableRows.length; i++ ){
+    tableRows[i].addEventListener('click', function(){
       if(String(this.parentNode.nodeName)==='THEAD') return;
       this.classList.add('active')
     })
  }
 }
 
+//data-tablelistuid기준으로 중복된 상품이 있는지 확인하고
+//중복된 상품은 지우는 함수
+//중복이 없는 데이터로의 돔을 만드는 함수
+function excludeDuplicatedRow(rows){
+}
 
 //완료
+//테이블 TR TD의 데이터를 객체 배열로 만드는 함수
+//
 function convertToTableObj(tableRow) {
   let rowData = [];
-
   rowData.push(tableRow.dataset.tablelistuid);
 
   Array.prototype.slice
@@ -82,7 +90,7 @@ function initializeRowData(rowList) {
 }
 
 //완료
-function initializeSelectedData(tableRowList) {
+function createSeletedData(tableRowList) {
   let rowDataList = [];
   tableRowList.forEach((tableTr) => {
     if (tableTr.classList.contains('active')){
@@ -91,7 +99,6 @@ function initializeSelectedData(tableRowList) {
   });
   return rowDataList;
 }
-
 
 
 function deleteOldThenRenderLeftTable(newRowData) {
@@ -117,20 +124,58 @@ function deleteOldThenRenderLeftTable(newRowData) {
   return;
 }
 
-//변경중
+
+//완료
+function createRightTableData(rows){
+let existingRightTableData=[];
+
+  //기존의 오른쪽 테이블 TR 데이터 배열
+  Array.prototype.slice.call(ExistingRightTableRows).forEach((tableTr) => {
+    existingRightTableData.push(convertToTableObj(tableTr));
+  });
+
+  let newGeneratedRightTableData  = [...existingRightTableData, ...rows ]
+
+  console.log('newGeneratedRightTableData', newGeneratedRightTableData)
+  return newGeneratedRightTableData
+
+}
+
+
+
+
+//완료
 function renderRightTable(selectedData) {
    if (!selectedData || selectedData.length === 0) return;
-    RenderingTableRow(selectedData)
-    RightTable.insertAdjacentHTML('beforeend', RenderingTableRow(selectedData).join(' '));
+    RenderingTableRowDom(selectedData)
+
+    RightTable.insertAdjacentHTML('beforeend', RenderingTableRowDom(selectedData).join(' '));
+
+    //추가
+    //기존의 오른쪽 테이블 데이터와
+    //새롭게 버튼, 추가로 생성된 데이터를 함께 모아
+    //오른쪽 테이블의 데이터로 만드는 함수
+
+  let rightTableData = createRightTableData(selectedData);
+
     selectedData=[];
 
     TableRowListFromServer.forEach((tableTr) => {
       tableTr.classList.remove('active')
-
     });
 
   return;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 // function onClickAddThenRerenderTable(selected) {
@@ -148,12 +193,6 @@ function renderRightTable(selectedData) {
 //   // selected data를 초기화
 //   return [];
 // }
-
-
-
-
-
-
 
 // function deleteOldThenRenderLeftTable(newRowData) {
 //   LeftTableTbody?.remove();
@@ -204,30 +243,43 @@ function renderRightTable(selectedData) {
 
 mockDataFromServer = initializeRowData(TableRowListFromServer);
 
-
-
+// 상품 추가하기
 AddButton.addEventListener('click', function () {
-
-
-  // selectedData = initializeSelectedData(TableRowListFromServer);
-  // console.log('Selected',selectedData)
-
-  selectedData = renderRightTable(initializeSelectedData(TableRowListFromServer));
-  //   selectedData = onClickAddThenRerenderTable(mockDataFromServer, initializeSelectedData(TableRowListFromServer));
-
+  selectedData = renderRightTable(createSeletedData(TableRowListFromServer));
   return;
 });
 
 
 
 
-(function(){
+console.log('ExistingRightTableRows ', ExistingRightTableRows );
 
-  clickAndAddClass();
+
+
+// AddButton.addEventListener('click', function () {
+
+
+//   // selectedData = createSeletedData(TableRowListFromServer);
+//   // console.log('Selected',selectedData)
+
+//   selectedData = renderRightTable(createSeletedData(TableRowListFromServer));
+//   //   selectedData = onClickAddThenRerenderTable(mockDataFromServer, createSeletedData(TableRowListFromServer));
+
+//   return;
+// });
+
+
+
+
+
+
+( function(){
+
+  clickItemsAndAddClass();
 
 })()
 
 
 
 console.log('초기 갖고 있는 테이블의 데이터', mockDataFromServer )
-console.log('클릭후,돔상태',TableRowListFromServer)
+console.log('초기상태',TableRowListFromServer)
