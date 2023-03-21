@@ -25,6 +25,7 @@ const tableColumnTitle = [
   'dateToUpload'
 ];
 
+//완료
 function convertToTableObj(tableRow) {
   let rowData = [];
   rowData.push(tableRow.dataset.tablelistuid);
@@ -43,6 +44,7 @@ function convertToTableObj(tableRow) {
   return obj;
 }
 
+//완료
 function RenderingTableTbody(selectedData) {
   const renderedTableRow = selectedData.map((checked) => {
     return `
@@ -61,6 +63,7 @@ function RenderingTableTbody(selectedData) {
     renderedTableRow.join('');
 }
 
+//완료
 function excludeDuplicatedData() {
   const filteredAndUniqueData = previousData.filter(
     (obj, index) =>
@@ -135,24 +138,17 @@ moveRightButton.addEventListener('click', () => {
 // # Category, 삭제 버튼
 // 오른쪽 테이블 로우를 클릭해서, 오른쪽 데이터가 삭제된다.
 
-rightTable.querySelectorAll('tbody tr').forEach((row) => {
-  row.addEventListener('click', () => {
-    row.classList.toggle('tobeDeleted');
+document
+  .querySelector('.right-table tbody')
+  .addEventListener('click', function (e) {
+    let selectedTR = e.target.parentNode;
+    selectedTR.classList.add('tobeDeleted');
   });
-});
 
 moveLeftButton.addEventListener('click', function () {
   const RowsToBeDeleted = Array.from(
     rightTable.querySelectorAll('.tobeDeleted')
   );
 
-  console.log('RowsToBeDeleted', RowsToBeDeleted);
+  RowsToBeDeleted.forEach((rows) => rows.remove());
 });
-
-// console.log('ddd', document.querySelectorAll('.right-table'));
-document.querySelector('.right-table').addEventListener('click', function (e) {
-  let selectedTR = e.target.parentNode;
-  selectedTR.classList.add('tobeDeleted');
-  console.log('selectedTR', selectedTR);
-});
-//case02
