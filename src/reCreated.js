@@ -46,7 +46,7 @@ function convertToTableObj(tableRow) {
 function RenderingTableTbody(selectedData) {
   const renderedTableRow = selectedData.map((checked) => {
     return `
-      <tr data-tablelistuid="${checked.tablelistuid}" onclick="pullOutItem();">
+      <tr data-tablelistuid="${checked.tablelistuid}">
         <td>${checked.category}</td>
         <td>${checked.categoryTell}</td>
         <td>${checked.categoryVerify}</td>
@@ -60,12 +60,6 @@ function RenderingTableTbody(selectedData) {
   document.querySelector('.right-table tbody').innerHTML =
     renderedTableRow.join('');
 }
-
-//
-function pullOutItem() {
-  console.log('버튼을 누르셨습니다.');
-}
-//
 
 function excludeDuplicatedData() {
   const filteredAndUniqueData = previousData.filter(
@@ -133,6 +127,8 @@ moveRightButton.addEventListener('click', () => {
     .forEach((item) => item.classList.remove('active'));
   createdRightTableData = [];
   initialExistedRightTableDataArray = [];
+
+  console.log('result', result);
 });
 
 // =======================================>
@@ -153,4 +149,10 @@ moveLeftButton.addEventListener('click', function () {
   console.log('RowsToBeDeleted', RowsToBeDeleted);
 });
 
+// console.log('ddd', document.querySelectorAll('.right-table'));
+document.querySelector('.right-table').addEventListener('click', function (e) {
+  let selectedTR = e.target.parentNode;
+  selectedTR.classList.add('tobeDeleted');
+  console.log('selectedTR', selectedTR);
+});
 //case02
