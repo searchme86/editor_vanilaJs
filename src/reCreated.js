@@ -1,23 +1,18 @@
-// Left-table
 const leftTable = document.getElementById('left-table');
 
-//button
 const moveRightButton = document.getElementById('move-right-button');
 const moveLeftButton = document.getElementById('move-left-button');
 const moveItemUpButton = document.getElementById('move-up-item');
 const moveItemDownButton = document.getElementById('move-down-item');
 
-// Right-table
 const rightTable = document.getElementById('right-table');
 const initialTBody = document.querySelector('.initial');
 const initialTRs = document.querySelectorAll('.initial tr');
 
-// Right-Data
 let createdRightTableData = [];
 let initialExistedRightTableDataArray = [];
 let previousData = [];
 
-// Left-Data
 let LeftTableData = [];
 let selectedData = [];
 let clickedItemsToMove = [];
@@ -28,7 +23,7 @@ const tableColumnTitle = [
   'categoryTell',
   'categoryVerify',
   'uploader',
-  'dateToUpload'
+  'dateToUpload',
 ];
 
 const convertTrArrayToTrObj = (tableRow) => {
@@ -38,14 +33,12 @@ const convertTrArrayToTrObj = (tableRow) => {
   Array.prototype.slice
     .call(tableRow.children)
     .forEach((tableTd) => rowData.push(tableTd.textContent.trim()));
-
   const obj = tableColumnTitle.reduce((acc, key, index) => {
     return {
       ...acc,
-      [key]: rowData[index]
+      [key]: rowData[index],
     };
   }, {});
-
   return obj;
 };
 
@@ -78,7 +71,6 @@ const excludeDuplicatedItems = () => {
 };
 
 const moveElementsToPreviousPosition = (elements) => {
-  console.log('elements', elements);
   const previousSibling = elements[0].previousSibling;
   if (!previousSibling) return;
   const parentNode = elements[0].parentNode;
@@ -88,28 +80,13 @@ const moveElementsToPreviousPosition = (elements) => {
 };
 
 const moveElementsToNextPosition = (elements) => {
-  console.log('elements', elements);
   const afterSelectedArrayPosition =
     elements[elements.length - 1].nextElementSibling;
 
-  console.log('nextSibling', afterSelectedArrayPosition);
-  console.log(
-    'afterSelectedArrayPosition.nextSibling',
-    afterSelectedArrayPosition.nextSibling
-  );
   if (!afterSelectedArrayPosition) return;
   const parentNode = elements[0].parentNode;
 
-  //처음
-  // for (let i = 0; i < elements.length; i++) {
-  //   parentNode.insertBefore(
-  //     elements[i],
-  //     afterSelectedArrayPosition.nextElementSibling
-  //   );
-  // }
-
   if (elements.length === 1) {
-    // N=1일 경우
     for (let i = 0; i < elements.length; i++) {
       parentNode.insertBefore(
         elements[i],
@@ -124,53 +101,28 @@ const moveElementsToNextPosition = (elements) => {
       );
     }
   }
-
-  //N=2 일 경우,
-  // for (let i = 0; i < elements.length; i--) {
-  //   parentNode.insertBefore(
-  //     elements[i + 1],
-  //     afterSelectedArrayPosition.nextElementSibling
-  //   );
-  // }
-
-  //N=3 일 경우,
-  // for (let i = 0; i <= elements.length; i--) {
-  //   parentNode.insertBefore(
-  //     elements[i + 2],
-  //     afterSelectedArrayPosition.nextElementSibling
-  //   );
-  // }
-
-  //N=4 일 경우,
-  // for (let i = 0; i <= elements.length; i--) {
-  //   parentNode.insertBefore(
-  //     elements[i + 3],
-  //     afterSelectedArrayPosition.nextElementSibling
-  //   );
-  // }
 };
 
 initialTRs.forEach((initial) => {
   initialExistedRightTableDataArray.push(convertTrArrayToTrObj(initial));
 });
 
-// # Category, 추가 버튼
 leftTable.querySelectorAll('tbody tr').forEach((row) => {
   row.addEventListener('click', () => {
     row.classList.toggle('active');
   });
 });
 
-// #추가버튼을 클릭 할 경우,
 moveRightButton.addEventListener('click', () => {
   let userSelectedList = [];
+
   const selectedRows = Array.from(leftTable.querySelectorAll('.active'));
   selectedRows.forEach((row) => {
     userSelectedList.push(convertTrArrayToTrObj(row));
   });
   createdRightTableData = [
     ...initialExistedRightTableDataArray,
-    ...userSelectedList
+    ...userSelectedList,
   ];
 
   previousData.push(...createdRightTableData);
@@ -191,8 +143,6 @@ moveRightButton.addEventListener('click', () => {
     .forEach((item) => item.classList.remove('active'));
   createdRightTableData = [];
   initialExistedRightTableDataArray = [];
-
-  console.log('result', result);
 });
 
 document
@@ -202,26 +152,19 @@ document
     selectedTR.classList.add('tobeDeleted');
   });
 
-// # Category, 삭제 버튼
 moveLeftButton.addEventListener('click', function () {
   const RowsToBeDeleted = Array.from(
     rightTable.querySelectorAll('.tobeDeleted')
   );
-
   RowsToBeDeleted.forEach((rows) => rows.remove());
 });
 
-// # Category, 위로이동 버튼
 moveItemUpButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
-  // console.log('moveItemUpButton,RowsToBeMoved ', RowsToBeMoved);
   moveElementsToPreviousPosition(RowsToBeMoved);
 });
 
-// # Category, 아래이동 버튼
 moveItemDownButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
-  // console.log('moveItemDownButton,RowsToBeMoved ', RowsToBeMoved);
-
   moveElementsToNextPosition(RowsToBeMoved);
 });
