@@ -135,26 +135,20 @@ moveRightButton.addEventListener('click', () => {
   ];
 
   previousData.push(...createdRightTableData);
-  // console.log('previousData', previousData);
 
   let uniqueData = excludeDuplicatedItems();
-  // console.log('uniqueData', uniqueData);
 
   const tbody = document.querySelector('.right-table tbody');
+
   while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
 
-  console.log('tbody', tbody);
-
-  // const result = RenderingTrAndInsertTbody(createdRightTableData);
   const result = RenderingTrAndInsertTbody(uniqueData);
 
   if (result === undefined) return;
 
   rightTable.appendChild(result);
-
-  // =======================>
 
   leftTable
     .querySelectorAll('tbody tr')
@@ -186,21 +180,17 @@ moveLeftButton.addEventListener('click', function () {
 // =======================================>
 // # Category, 위로이동 버튼
 moveItemUpButton.addEventListener('click', function () {
-  console.log('this', this);
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
   console.log('RowsToBeMoved', RowsToBeMoved);
 
-  // const elems = document.querySelectorAll('.my-elements');
   moveElementsToPreviousPosition(RowsToBeMoved);
 });
 
 // =======================================>
 // # Category, 아래이동 버튼
 moveItemDownButton.addEventListener('click', function () {
-  console.log('this', this);
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
   console.log('RowsToBeMoved', RowsToBeMoved);
 
-  // const elems = document.querySelectorAll('.my-elements');
   moveElementsToNextPosition(RowsToBeMoved);
 });
