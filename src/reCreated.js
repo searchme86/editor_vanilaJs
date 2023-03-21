@@ -77,6 +77,15 @@ const excludeDuplicatedItems = () => {
   return filteredAndUniqueData;
 };
 
+const moveElementsToPreviousPosition = (elements) => {
+  const previousSibling = elements[0].previousSibling;
+  if (!previousSibling) return;
+  const parentNode = elements[0].parentNode;
+  for (var i = 0; i < elements.length; i++) {
+    parentNode.insertBefore(elements[i], previousSibling.previousSibling);
+  }
+};
+
 const moveElementsToNextPosition = (elements) => {
   console.log('elements', elements);
   const nextSibling = elements[elements.length - 1].nextSibling;
@@ -85,15 +94,6 @@ const moveElementsToNextPosition = (elements) => {
   const parentNode = elements[0].parentNode;
   for (var i = 0; i < elements.length; i++) {
     parentNode.insertBefore(elements[i], nextSibling.nextSibling);
-  }
-};
-
-const moveElementsToPreviousPosition = (elements) => {
-  const previousSibling = elements[0].previousSibling;
-  if (!previousSibling) return;
-  const parentNode = elements[0].parentNode;
-  for (var i = 0; i < elements.length; i++) {
-    parentNode.insertBefore(elements[i], previousSibling.previousSibling);
   }
 };
 
