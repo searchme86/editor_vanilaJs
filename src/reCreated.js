@@ -4,7 +4,7 @@ const rightTable = document.getElementById('right-table');
 const moveRightButton = document.getElementById('move-right-button');
 const moveLeftButton = document.getElementById('move-left-button');
 const moveItemUpButton = document.getElementById('move-up-item');
-const moveItemDowneButton = document.getElementById('move-down-item');
+const moveItemDownButton = document.getElementById('move-down-item');
 
 const initialTBody = document.querySelector('.initial');
 const initialTRs = document.querySelectorAll('.initial tr');
@@ -89,19 +89,18 @@ const insertAfter = (referenceNode, nodeToInsert) => {
 };
 
 const moveElementsToNextPosition = (elements) => {
-  const nextSibling = elements[length - 1].nextSibling;
+  console.log('elements', elements);
+  const nextSibling = elements[elements.length - 1].nextSibling;
+  console.log('nextSibling', nextSibling);
   if (!nextSibling) return;
   const parentNode = elements[0].parentNode;
-  // Loop through the array and insert each element after its next sibling
   for (var i = 0; i < elements.length; i++) {
     parentNode.insertBefore(elements[i], nextSibling.nextSibling);
   }
 };
 
 const moveElementsToPreviousPosition = (elements) => {
-  console.log('elements', elements);
   const previousSibling = elements[0].previousSibling;
-  console.log('previousSibling', previousSibling);
   if (!previousSibling) return;
   const parentNode = elements[0].parentNode;
   for (var i = 0; i < elements.length; i++) {
@@ -197,7 +196,7 @@ moveItemUpButton.addEventListener('click', function () {
 
 // =======================================>
 // # Category, 아래이동 버튼
-moveItemDowneButton.addEventListener('click', function () {
+moveItemDownButton.addEventListener('click', function () {
   console.log('this', this);
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
   console.log('RowsToBeMoved', RowsToBeMoved);
