@@ -77,14 +77,6 @@ const excludeDuplicatedItems = () => {
   return filteredAndUniqueData;
 };
 
-// const insertAfter = (referenceNode, newNode) => {
-//   if (!!referenceNode.nextSibling) {
-//     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-//   } else {
-//     referenceNode.parentNode.appendChild(newNode);
-//   }
-// };
-
 const moveElementsToPreviousPosition = (elements) => {
   console.log('elements', elements);
   const previousSibling = elements[0].previousSibling;
@@ -100,12 +92,6 @@ const moveElementsToNextPosition = (elements) => {
   const afterSelectedArrayPosition =
     elements[elements.length - 1].nextElementSibling;
 
-  // 버그 발생
-  //: 이유 : nextSibling으로 할 경우, 텍스트 뒤에 붙는다.
-  // nextElementSibling으로 변경하면 클릭하는 횟수만큼 이동함
-  //버그 코드
-  // const afterSelectedArrayPosition = elements[elements.length - 1].nextSibling;
-
   console.log('nextSibling', afterSelectedArrayPosition);
   console.log(
     'afterSelectedArrayPosition.nextSibling',
@@ -114,18 +100,54 @@ const moveElementsToNextPosition = (elements) => {
   if (!afterSelectedArrayPosition) return;
   const parentNode = elements[0].parentNode;
 
+  //처음
   // for (let i = 0; i < elements.length; i++) {
   //   parentNode.insertBefore(
   //     elements[i],
   //     afterSelectedArrayPosition.nextElementSibling
   //   );
   // }
-  for (let i = 0; i < elements.length; i--) {
-    parentNode.insertBefore(
-      elements[i + 1],
-      afterSelectedArrayPosition.nextElementSibling
-    );
+
+  if (elements.length === 1) {
+    // N=1일 경우
+    for (let i = 0; i < elements.length; i++) {
+      parentNode.insertBefore(
+        elements[i],
+        afterSelectedArrayPosition.nextElementSibling
+      );
+    }
+  } else {
+    for (let i = 0; i < elements.length; i--) {
+      parentNode.insertBefore(
+        elements[i + (elements.length - 1)],
+        afterSelectedArrayPosition.nextElementSibling
+      );
+    }
   }
+
+  //N=2 일 경우,
+  // for (let i = 0; i < elements.length; i--) {
+  //   parentNode.insertBefore(
+  //     elements[i + 1],
+  //     afterSelectedArrayPosition.nextElementSibling
+  //   );
+  // }
+
+  //N=3 일 경우,
+  // for (let i = 0; i <= elements.length; i--) {
+  //   parentNode.insertBefore(
+  //     elements[i + 2],
+  //     afterSelectedArrayPosition.nextElementSibling
+  //   );
+  // }
+
+  //N=4 일 경우,
+  // for (let i = 0; i <= elements.length; i--) {
+  //   parentNode.insertBefore(
+  //     elements[i + 3],
+  //     afterSelectedArrayPosition.nextElementSibling
+  //   );
+  // }
 };
 
 initialTRs.forEach((initial) => {
