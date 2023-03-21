@@ -77,23 +77,52 @@ const excludeDuplicatedItems = () => {
   return filteredAndUniqueData;
 };
 
+const insertAfter = (referenceNode, newNode) => {
+  if (!!referenceNode.nextSibling) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  } else {
+    referenceNode.parentNode.appendChild(newNode);
+  }
+};
+
 const moveElementsToPreviousPosition = (elements) => {
+  console.log('elements', elements);
   const previousSibling = elements[0].previousSibling;
   if (!previousSibling) return;
   const parentNode = elements[0].parentNode;
-  for (var i = 0; i < elements.length; i++) {
+  for (let i = 0; i < elements.length; i++) {
     parentNode.insertBefore(elements[i], previousSibling.previousSibling);
   }
 };
 
 const moveElementsToNextPosition = (elements) => {
   console.log('elements', elements);
-  const nextSibling = elements[elements.length - 1].nextSibling;
-  console.log('nextSibling', nextSibling);
-  if (!nextSibling) return;
+
+  //test
+
+  const last = elements[elements.length - 1];
+
+  const afterSelectedArrayPosition =
+    elements[elements.length - 1].nextElementSibling;
+  // 버그 발생
+  //: 이유 : nextSibling으로 할 경우, 텍스트 뒤에 붙는다.
+  // nextElementSibling으로 변경하면 클릭하는 횟수만큼 이동함
+  //버그 코드
+  // const afterSelectedArrayPosition = elements[elements.length - 1].nextSibling;
+
+  console.log('nextSibling', afterSelectedArrayPosition);
+  console.log(
+    'afterSelectedArrayPosition.nextSibling',
+    afterSelectedArrayPosition.nextSibling
+  );
+  if (!afterSelectedArrayPosition) return;
   const parentNode = elements[0].parentNode;
-  for (var i = 0; i < elements.length; i++) {
-    parentNode.insertBefore(elements[i], nextSibling.nextSibling);
+
+  for (let i = 0; i < elements.length; i++) {
+    parentNode.insertBefore(
+      elements[i],
+      afterSelectedArrayPosition.nextSibling
+    );
   }
 };
 
@@ -161,15 +190,14 @@ moveLeftButton.addEventListener('click', function () {
 // # Category, 위로이동 버튼
 moveItemUpButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
-  console.log('RowsToBeMoved', RowsToBeMoved);
-
+  // console.log('moveItemUpButton,RowsToBeMoved ', RowsToBeMoved);
   moveElementsToPreviousPosition(RowsToBeMoved);
 });
 
 // # Category, 아래이동 버튼
 moveItemDownButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
-  console.log('RowsToBeMoved', RowsToBeMoved);
+  // console.log('moveItemDownButton,RowsToBeMoved ', RowsToBeMoved);
 
   moveElementsToNextPosition(RowsToBeMoved);
 });
