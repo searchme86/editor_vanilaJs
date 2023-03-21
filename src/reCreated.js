@@ -2,6 +2,7 @@ const leftTable = document.getElementById('left-table');
 const rightTable = document.getElementById('right-table');
 
 const moveRightButton = document.getElementById('move-right-button');
+const moveLeftButton = document.getElementById('move-left-button');
 
 const initialTBody = document.querySelector('.initial');
 const initialTRs = document.querySelectorAll('.initial tr');
@@ -21,7 +22,7 @@ const tableColumnTitle = [
   'categoryTell',
   'categoryVerify',
   'uploader',
-  'dateToUpload',
+  'dateToUpload'
 ];
 
 function convertToTableObj(tableRow) {
@@ -35,7 +36,7 @@ function convertToTableObj(tableRow) {
   const obj = tableColumnTitle.reduce((acc, key, index) => {
     return {
       ...acc,
-      [key]: rowData[index],
+      [key]: rowData[index]
     };
   }, {});
 
@@ -45,7 +46,7 @@ function convertToTableObj(tableRow) {
 function RenderingTableTbody(selectedData) {
   const renderedTableRow = selectedData.map((checked) => {
     return `
-      <tr data-tablelistuid="${checked.tablelistuid}">
+      <tr data-tablelistuid="${checked.tablelistuid}" onclick="pullOutItem();">
         <td>${checked.category}</td>
         <td>${checked.categoryTell}</td>
         <td>${checked.categoryVerify}</td>
@@ -56,11 +57,15 @@ function RenderingTableTbody(selectedData) {
   });
 
   if (renderedTableRow.length === 0) return;
-
-  document.querySelector('.right-table tbody').innerHTML = renderedTableRow.join('');
-
-  return tbody;
+  document.querySelector('.right-table tbody').innerHTML =
+    renderedTableRow.join('');
 }
+
+//
+function pullOutItem() {
+  console.log('버튼을 누르셨습니다.');
+}
+//
 
 function excludeDuplicatedData() {
   const filteredAndUniqueData = previousData.filter(
@@ -76,13 +81,18 @@ initialTRs.forEach((initial) => {
   initialExistedRightTableDataArray.push(convertToTableObj(initial));
 });
 
+// =======================================>
+// # Category, 추가 버튼
+// 왼쪽의 테이블 로우를 클릭해서, 우측 테이블로 데이터를 추가함
+
+// 유저가 왼쪽 테이블의 로우 를 클릭할때
 leftTable.querySelectorAll('tbody tr').forEach((row) => {
   row.addEventListener('click', () => {
     row.classList.toggle('active');
   });
 });
 
-// # 추가버튼을 클릭 할 경우,
+// #추가버튼을 클릭 할 경우,
 moveRightButton.addEventListener('click', () => {
   let userSelectedList = [];
   const selectedRows = Array.from(leftTable.querySelectorAll('.active'));
@@ -93,32 +103,30 @@ moveRightButton.addEventListener('click', () => {
 
   createdRightTableData = [
     ...initialExistedRightTableDataArray,
-    ...userSelectedList,
+    ...userSelectedList
   ];
 
   previousData.push(...createdRightTableData);
-
   console.log('previousData', previousData);
 
-  // ===================================================>
-  //2. Todo
   let uniqueData = excludeDuplicatedData();
   console.log('uniqueData', uniqueData);
 
-  // initialTBody.remove();
-
   const tbody = document.querySelector('.right-table tbody');
-   while (tbody.firstChild) {
+  while (tbody.firstChild) {
     tbody.removeChild(tbody.firstChild);
   }
 
-  console.log('tbody',tbody)
+  console.log('tbody', tbody);
 
-  const result = RenderingTableTbody(createdRightTableData);
+  // const result = RenderingTableTbody(createdRightTableData);
+  const result = RenderingTableTbody(uniqueData);
 
   if (result === undefined) return;
 
   rightTable.appendChild(result);
+
+  // =======================>
 
   leftTable
     .querySelectorAll('tbody tr')
@@ -126,3 +134,23 @@ moveRightButton.addEventListener('click', () => {
   createdRightTableData = [];
   initialExistedRightTableDataArray = [];
 });
+
+// =======================================>
+// # Category, 삭제 버튼
+// 오른쪽 테이블 로우를 클릭해서, 오른쪽 데이터가 삭제된다.
+
+rightTable.querySelectorAll('tbody tr').forEach((row) => {
+  row.addEventListener('click', () => {
+    row.classList.toggle('tobeDeleted');
+  });
+});
+
+moveLeftButton.addEventListener('click', function () {
+  const RowsToBeDeleted = Array.from(
+    rightTable.querySelectorAll('.tobeDeleted')
+  );
+
+  console.log('RowsToBeDeleted', RowsToBeDeleted);
+});
+
+//case02
