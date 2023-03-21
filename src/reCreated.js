@@ -55,13 +55,9 @@ function RenderingTableTbody(selectedData) {
       `;
   });
 
-  if (!renderedTableRow.length) return;
+  if (renderedTableRow.length === 0) return;
 
-  // ===================================================>
-  //1. Todo
-  //tbody가 1개 이상일때, 그 전에다가 append 할 수 있도록
-  const tbody = document.createElement('tbody');
-  tbody.innerHTML = renderedTableRow.join('');
+  document.querySelector('.right-table tbody').innerHTML = renderedTableRow.join('');
 
   return tbody;
 }
@@ -109,7 +105,14 @@ moveRightButton.addEventListener('click', () => {
   let uniqueData = excludeDuplicatedData();
   console.log('uniqueData', uniqueData);
 
-  initialTBody.remove();
+  // initialTBody.remove();
+
+  const tbody = document.querySelector('.right-table tbody');
+   while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
+
+  console.log('tbody',tbody)
 
   const result = RenderingTableTbody(createdRightTableData);
 
