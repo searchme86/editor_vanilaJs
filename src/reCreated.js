@@ -1,20 +1,23 @@
+// Left-table
 const leftTable = document.getElementById('left-table');
-const rightTable = document.getElementById('right-table');
 
+//button
 const moveRightButton = document.getElementById('move-right-button');
 const moveLeftButton = document.getElementById('move-left-button');
 const moveItemUpButton = document.getElementById('move-up-item');
 const moveItemDownButton = document.getElementById('move-down-item');
 
+// Right-table
+const rightTable = document.getElementById('right-table');
 const initialTBody = document.querySelector('.initial');
 const initialTRs = document.querySelectorAll('.initial tr');
 
-// Right
-let initialExistedRightTableDataArray = [];
+// Right-Data
 let createdRightTableData = [];
+let initialExistedRightTableDataArray = [];
 let previousData = [];
 
-// Left
+// Left-Data
 let LeftTableData = [];
 let selectedData = [];
 let clickedItemsToMove = [];
@@ -28,8 +31,7 @@ const tableColumnTitle = [
   'dateToUpload'
 ];
 
-//완료
-function convertTrArrayToTrObj(tableRow) {
+const convertTrArrayToTrObj = (tableRow) => {
   let rowData = [];
   rowData.push(tableRow.dataset.tablelistuid);
 
@@ -45,10 +47,9 @@ function convertTrArrayToTrObj(tableRow) {
   }, {});
 
   return obj;
-}
+};
 
-//완료
-function RenderingTrAndInsertTbody(selectedData) {
+const RenderingTrAndInsertTbody = (selectedData) => {
   const renderedTableRow = selectedData.map((checked) => {
     return `
       <tr data-tablelistuid="${checked.tablelistuid}">
@@ -64,10 +65,9 @@ function RenderingTrAndInsertTbody(selectedData) {
   if (renderedTableRow.length === 0) return;
   document.querySelector('.right-table tbody').innerHTML =
     renderedTableRow.join('');
-}
+};
 
-//완료
-function excludeDuplicatedItems() {
+const excludeDuplicatedItems = () => {
   const filteredAndUniqueData = previousData.filter(
     (obj, index) =>
       previousData.findIndex(
@@ -75,17 +75,6 @@ function excludeDuplicatedItems() {
       ) === index
   );
   return filteredAndUniqueData;
-}
-
-const insertAfter = (referenceNode, nodeToInsert) => {
-  if (!!referenceNode.nextElementSilbing) {
-    referenceNode.parentNode.insertBefore(
-      nodeToInsert,
-      referenceNode.nextElementSilbing
-    );
-  } else {
-    referenceNode.parentNode.appendChild(nodeToInsert);
-  }
 };
 
 const moveElementsToNextPosition = (elements) => {
@@ -112,7 +101,6 @@ initialTRs.forEach((initial) => {
   initialExistedRightTableDataArray.push(convertTrArrayToTrObj(initial));
 });
 
-// =======================================>
 // # Category, 추가 버튼
 leftTable.querySelectorAll('tbody tr').forEach((row) => {
   row.addEventListener('click', () => {
@@ -124,11 +112,9 @@ leftTable.querySelectorAll('tbody tr').forEach((row) => {
 moveRightButton.addEventListener('click', () => {
   let userSelectedList = [];
   const selectedRows = Array.from(leftTable.querySelectorAll('.active'));
-
   selectedRows.forEach((row) => {
     userSelectedList.push(convertTrArrayToTrObj(row));
   });
-
   createdRightTableData = [
     ...initialExistedRightTableDataArray,
     ...userSelectedList
@@ -137,7 +123,6 @@ moveRightButton.addEventListener('click', () => {
   previousData.push(...createdRightTableData);
 
   let uniqueData = excludeDuplicatedItems();
-
   const tbody = document.querySelector('.right-table tbody');
 
   while (tbody.firstChild) {
@@ -145,9 +130,7 @@ moveRightButton.addEventListener('click', () => {
   }
 
   const result = RenderingTrAndInsertTbody(uniqueData);
-
   if (result === undefined) return;
-
   rightTable.appendChild(result);
 
   leftTable
@@ -166,9 +149,7 @@ document
     selectedTR.classList.add('tobeDeleted');
   });
 
-// =======================================>
 // # Category, 삭제 버튼
-// 오른쪽 테이블 로우를 클릭해서, 오른쪽 데이터가 삭제된다.
 moveLeftButton.addEventListener('click', function () {
   const RowsToBeDeleted = Array.from(
     rightTable.querySelectorAll('.tobeDeleted')
@@ -177,7 +158,6 @@ moveLeftButton.addEventListener('click', function () {
   RowsToBeDeleted.forEach((rows) => rows.remove());
 });
 
-// =======================================>
 // # Category, 위로이동 버튼
 moveItemUpButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
@@ -186,7 +166,6 @@ moveItemUpButton.addEventListener('click', function () {
   moveElementsToPreviousPosition(RowsToBeMoved);
 });
 
-// =======================================>
 // # Category, 아래이동 버튼
 moveItemDownButton.addEventListener('click', function () {
   const RowsToBeMoved = Array.from(rightTable.querySelectorAll('.tobeDeleted'));
