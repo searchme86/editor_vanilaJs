@@ -3,6 +3,8 @@ const rightTable = document.getElementById('right-table');
 
 const moveRightButton = document.getElementById('move-right-button');
 const moveLeftButton = document.getElementById('move-left-button');
+const moveItemUpButton = document.getElementById('move-up-item');
+const moveItemDowneButton = document.getElementById('move-down-item');
 
 const initialTBody = document.querySelector('.initial');
 const initialTRs = document.querySelectorAll('.initial tr');
@@ -74,6 +76,17 @@ function excludeDuplicatedData() {
   return filteredAndUniqueData;
 }
 
+const insertAfter = (referenceNode, nodeToInsert) => {
+  if (!!referenceNode.nextElementSilbing) {
+    referenceNode.parentNode.insertBefore(
+      nodeToInsert,
+      referenceNode.nextElementSilbing
+    );
+  } else {
+    referenceNode.parentNode.appendChild(nodeToInsert);
+  }
+};
+
 initialTRs.forEach((initial) => {
   initialExistedRightTableDataArray.push(convertToTableObj(initial));
 });
@@ -134,16 +147,16 @@ moveRightButton.addEventListener('click', () => {
   console.log('result', result);
 });
 
-// =======================================>
-// # Category, 삭제 버튼
-// 오른쪽 테이블 로우를 클릭해서, 오른쪽 데이터가 삭제된다.
-
 document
   .querySelector('.right-table tbody')
   .addEventListener('click', function (e) {
     let selectedTR = e.target.parentNode;
     selectedTR.classList.add('tobeDeleted');
   });
+
+// =======================================>
+// # Category, 삭제 버튼
+// 오른쪽 테이블 로우를 클릭해서, 오른쪽 데이터가 삭제된다.
 
 moveLeftButton.addEventListener('click', function () {
   const RowsToBeDeleted = Array.from(
@@ -152,3 +165,7 @@ moveLeftButton.addEventListener('click', function () {
 
   RowsToBeDeleted.forEach((rows) => rows.remove());
 });
+
+// =======================================>
+// # Category, 위로이동 버튼
+// 오른쪽 위로 이동한다.
