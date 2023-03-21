@@ -77,13 +77,13 @@ const excludeDuplicatedItems = () => {
   return filteredAndUniqueData;
 };
 
-const insertAfter = (referenceNode, newNode) => {
-  if (!!referenceNode.nextSibling) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-  } else {
-    referenceNode.parentNode.appendChild(newNode);
-  }
-};
+// const insertAfter = (referenceNode, newNode) => {
+//   if (!!referenceNode.nextSibling) {
+//     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+//   } else {
+//     referenceNode.parentNode.appendChild(newNode);
+//   }
+// };
 
 const moveElementsToPreviousPosition = (elements) => {
   console.log('elements', elements);
@@ -97,13 +97,9 @@ const moveElementsToPreviousPosition = (elements) => {
 
 const moveElementsToNextPosition = (elements) => {
   console.log('elements', elements);
-
-  //test
-
-  const last = elements[elements.length - 1];
-
   const afterSelectedArrayPosition =
     elements[elements.length - 1].nextElementSibling;
+
   // 버그 발생
   //: 이유 : nextSibling으로 할 경우, 텍스트 뒤에 붙는다.
   // nextElementSibling으로 변경하면 클릭하는 횟수만큼 이동함
@@ -118,10 +114,16 @@ const moveElementsToNextPosition = (elements) => {
   if (!afterSelectedArrayPosition) return;
   const parentNode = elements[0].parentNode;
 
-  for (let i = 0; i < elements.length; i++) {
+  // for (let i = 0; i < elements.length; i++) {
+  //   parentNode.insertBefore(
+  //     elements[i],
+  //     afterSelectedArrayPosition.nextElementSibling
+  //   );
+  // }
+  for (let i = 0; i < elements.length; i--) {
     parentNode.insertBefore(
-      elements[i],
-      afterSelectedArrayPosition.nextSibling
+      elements[i + 1],
+      afterSelectedArrayPosition.nextElementSibling
     );
   }
 };
