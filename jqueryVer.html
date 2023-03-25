@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>서식별 문서관리</title>
     <style>
-      .container {
+      .stack_table {
         display: flex;
-        justify-content: center;
-        align-items: center;
+      }
+      .control_btn button {
+        display: block;
       }
       .active {
         background: yellow;
-      }
-
-      .tobeDeleted {
-        background: pink;
       }
     </style>
     <script
@@ -25,115 +22,593 @@
       crossorigin="anonymous"
     ></script>
   </head>
+
   <body>
-    <div class="container">
-      <div class="left_area">
-        <table class="left-table" id="left-table">
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-          </colgroup>
-          <thead>
-            <tr>
-              <td>항목명</td>
-              <td>항목구분</td>
-              <td>검증항목</td>
-              <td>등록자</td>
-              <td>등록일시</td>
-            </tr>
-          </thead>
-          <tbody id="itemList_tbody">
-            <tr data-tablelistuid="23031314084303A2A70B99">
-              <td>상품명</td>
-              <td>기본</td>
-              <td>상품명</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-            <tr data-tablelistuid="230313190403564F77A9C3">
-              <td>상품종류</td>
-              <td>기본</td>
-              <td>상품종류</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-            <tr data-tablelistuid="230316175457103FF33F03">
-              <td>상품코드</td>
-              <td>기본</td>
-              <td>상품코드</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-            <tr data-tablelistuid="230317172534762DAC9D8C">
-              <td>판매시작일자</td>
-              <td>기본</td>
-              <td>시기</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-            <tr data-tablelistuid="23031717264286DAFE13DD">
-              <td>판매종료일자</td>
-              <td>기본</td>
-              <td>종기</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-            <tr data-tablelistuid="230317191851533CFDED7A">
-              <td>약관개시일자</td>
-              <td>기본</td>
-              <td>시기</td>
-              <td>admin</td>
-              <td>2023-01-01</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="base_pd">
+      <div class="stack_table">
+        <div class="left_area">
+          <div class="main_table">
+            <table class="left-table" id="left-table">
+              <colgroup>
+                <col style="width: 22%" />
+                <col style="width: 18%" />
+                <col style="width: 20%" />
+                <col style="width: 20%" />
+                <col style="width: 20%" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목명</span>
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목구분</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목유형</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>등록자</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>등록일시</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="leftTbody">
+                <tr class="" data-tablelistuid="23031314084303A2A70B99">
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="1054329123270C06512">
+                  <td>
+                    <p class="td_c">상품코드</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품코드</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="5374316175457103FF33F03">
+                  <td>
+                    <p class="td_c">판매시작일자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">시기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="6785345534762DAC9D8C">
+                  <td>
+                    <p class="td_c">판매종료일자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">종기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="83DGRS64286DAFE13DD">
+                  <td>
+                    <p class="td_c">약관개시일자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">시기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="793G191851533CFDED7A">
+                  <td>
+                    <p class="td_c">상품유형</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품유형</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="23463751234364F79C3">
+                  <td>
+                    <p class="td_c">연만기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">종기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="35234637DD4245FRQSG">
+                  <td>
+                    <p class="td_c">세만기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">종기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="841246445742742DAC9D8C">
+                  <td>
+                    <p class="td_c">예정이율</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">예정이율</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="2ER342BF23RQ3ETRF74434">
+                  <td>
+                    <p class="td_c">납입면제</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">면제여부</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="23BS855F6SDWGD723FE44">
+                  <td>
+                    <p class="td_c">판매채널</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">판매채널</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="477DF34FF51358DRFGR58">
+                  <td>
+                    <p class="td_c">저축성</p>
+                  </td>
+                  <td>
+                    <p class="td_c">사용자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="352DFG46646DRGFF33F03">
+                  <td>
+                    <p class="td_c">보장성</p>
+                  </td>
+                  <td>
+                    <p class="td_c">사용자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="8SDFTWFH5RW274SAC9D8C">
+                  <td>
+                    <p class="td_c">보장유형</p>
+                  </td>
+                  <td>
+                    <p class="td_c">사용자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr class="" data-tablelistuid="3583567E8F5SGSD362345">
+                  <td>
+                    <p class="td_c">보장기간</p>
+                  </td>
+                  <td>
+                    <p class="td_c">사용자</p>
+                  </td>
+                  <td>
+                    <p class="td_c">종기</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="control_btn">
+          <button id="move-up-item">
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_moveUp_subject.svg"
+              alt=""
+            /> -->
+            아이템 위로 이동
+          </button>
+          <button name="moveDownItem">
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_moveDown_subject.svg"
+              alt=""
+            /> -->
+            아이템 아래로 이동
+          </button>
+          <button name="moveRightButton">
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_moveRight_subject.svg"
+              alt=""
+            /> -->
+            아이템 추가
+          </button>
+          <button id="move-left-button">
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_moveLeft_subject.svg"
+              alt=""
+            /> -->
+            아이템 삭제
+          </button>
+          <button>
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_save_subject.svg"
+              alt=""
+            /> -->
+          </button>
+          <button>
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/doc_drop_item.svg"
+              alt=""
+            /> -->
+          </button>
+          <button>
+            <!-- <img
+              class="icon"
+              src="/resource/image/icon/template_item_refresh_item.svg"
+              alt=""
+            /> -->
+          </button>
+        </div>
+        <div class="right_area">
+          <!-- <div class="search_header">
+            <p class="em_desc">상품약관 문서 관리 항목 : 15건</p>
+          </div> -->
+          <div class="main_table">
+            <table class="right-table" id="right-table">
+              <colgroup>
+                <col style="width: 22%" />
+                <col style="width: 18%" />
+                <col style="width: 20%" />
+                <col style="width: 20%" />
+                <col style="width: 20%" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목명</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목구분</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>항목유형</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>상품구분</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>등록자</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                  <th class="table_sort" data-sort="">
+                    <div class="td_c">
+                      <span>등록일시</span>
+                      <!-- <div class="sort_wrap">
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon asc"
+                          alt=""
+                        />
+                        <img
+                          src="/resource/image/icon/sort_icon.svg"
+                          class="sort_icon desc"
+                          alt=""
+                        />
+                      </div> -->
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="initial" id="rightTbody">
+                <tr data-tablelistuid="23031314084303A2A70B99">
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품종류</p>
+                  </td>
+                  <td>
+                    <p class="td_c">장기보험</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+                <tr data-tablelistuid="1054329123270C06512">
+                  <td>
+                    <p class="td_c">상품코드</p>
+                  </td>
+                  <td>
+                    <p class="td_c">기본</p>
+                  </td>
+                  <td>
+                    <p class="td_c">상품코드</p>
+                  </td>
+                  <td>
+                    <p class="td_c">장기보험</p>
+                  </td>
+                  <td>
+                    <p class="td_c">admin</p>
+                  </td>
+                  <td>
+                    <p class="td_c">2023-04-01</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="control_button" id="button-container">
-        <button type="button" id="move-right-button">추가</button>
-        <button type="button" id="move-left-button">삭제</button>
-        <button type="button" id="move-up-item">위로이동</button>
-        <button type="button" id="move-down-item">아래로이동</button>
-      </div>
-      <div class="right_area">
-        <table class="right-table" id="right-table">
-          <colgroup>
-            <col />
-            <col />
-            <col />
-            <col />
-            <col />
-          </colgroup>
-          <thead>
-            <tr>
-              <td>항목명</td>
-              <td>항목구분</td>
-              <td>검증항목</td>
-              <td>등록자</td>
-              <td>등록일시</td>
-            </tr>
-          </thead>
-          <tbody class="initial">
-            <tr data-tablelistuid="1054329#!@270C06$12">
-              <td>기존텍스트1-1</td>
-              <td>기존텍스트1-2</td>
-              <td>기존텍스트1-3</td>
-              <td>기존텍스트1-4</td>
-              <td>기존텍스트1-5</td>
-            </tr>
-            <tr data-tablelistuid="105%#$!9#!@270C06$12">
-              <td>기존텍스트2-1</td>
-              <td>기존텍스트2-2</td>
-              <td>기존텍스트2-3</td>
-              <td>기존텍스트2-4</td>
-              <td>기존텍스트2-5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </section>
+
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="hidden" name="_csrf_header" value="${_csrf.headerName}" />
+
+    <!-- <script
+      type="text/javascript"
+      src="/resource/js/common/quantumbase.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="/resource/js/pim/proditem/proditem.js"
+    ></script>
+    <script type="text/javascript">
+      $(document).ready(function () {});
+    </script> -->
     <script src="src/jqueryVer.js"></script>
   </body>
 </html>

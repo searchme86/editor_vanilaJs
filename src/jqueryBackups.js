@@ -57,35 +57,19 @@ $(function () {
       }
     });
 
+    // const filterItemsAgainstRightTable = uniqueLeftTableArray.filter(
+    //   (obj, index) =>
+    //     reference.findIndex(
+    //       (item) => item.tablelistuid === obj.tablelistuid
+    //     ) !== index
+    // );
+
     const filterItemsAgainstRightTable = uniqueLeftTableArray.filter(
       (obj, index) =>
         !reference.some((item) => item.tablelistuid === obj.tablelistuid)
     );
 
     return filterItemsAgainstRightTable;
-  }
-
-  function findDuplicated(arr, reference) {
-    let uniqueLeftTableArray = [];
-
-    $.each(arr, function (i, obj) {
-      if (
-        $.inArray(
-          obj.tablelistuid,
-          $.map(uniqueLeftTableArray, function (item) {
-            return item.tablelistuid;
-          })
-        ) === -1
-      ) {
-        uniqueLeftTableArray.push(obj);
-      }
-    });
-
-    const duplicatedDataArray = uniqueLeftTableArray.filter((obj, index) =>
-      reference.some((item) => item.tablelistuid === obj.tablelistuid)
-    );
-
-    return duplicatedDataArray;
   }
 
   function AddTableRowToCurrentTable(targetTable, tablRowArrayToAdd) {
@@ -138,7 +122,7 @@ $(function () {
 
     let userSelecteTableRow;
     let TableRowsToAdd;
-    let TableRowsDuplicated;
+    // let RightTableRowAfterClicked;
 
     const RightTable = $('#rightTbody');
     let LeftTableTrSelected = $('#leftTbody > tr.active');
@@ -150,14 +134,9 @@ $(function () {
       userSelecteTableRow,
       createObjArrayOfTableData(RightDataBeforeClicked)
     );
-
-    TableRowsDuplicated = findDuplicated(
-      userSelecteTableRow,
-      createObjArrayOfTableData(RightDataBeforeClicked)
-    );
-
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
 
+    // RightTableRowAfterClicked = calculateCurrentRightTableRowsArray();
     calculateCurrentRightTableRowsArray();
   });
 });
