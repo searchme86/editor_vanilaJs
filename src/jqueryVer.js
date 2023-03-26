@@ -17,6 +17,7 @@ $(function () {
   ];
 
   let LeftTableTr = $('.left-table tbody tr');
+  let AfterRightTableRowAddedLength;
 
   function convertTableRowToObjArray(tableEachRow) {
     let rowData = [];
@@ -147,17 +148,6 @@ $(function () {
     });
   }
 
-  function calculateCurrentRightTableRowsArray() {
-    let rightTableTRArray = [];
-
-    $.each($('#rightTbody tr'), function (index, item) {
-      const totalRightTableDataArray = convertTableRowToObjArray($(item));
-      rightTableTRArray.push(totalRightTableDataArray);
-    });
-
-    return rightTableTRArray;
-  }
-
   $.each(LeftTableTr, function (index, element) {
     $(element).on('click', function () {
       $(element).toggleClass('active');
@@ -193,24 +183,21 @@ $(function () {
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
 
     transformArrayToText(TableRowsDuplicated, 'category');
-
-    calculateCurrentRightTableRowsArray();
   });
 
   /****************************************************
    * 버튼 클릭해, 선택항목 아이템 삭제
    ****************************************************/
-  let RightTabletbodytr = $('.right-table tbody tr');
-
   $(document).on('click', '.right-table tbody tr', function () {
     $(this).toggleClass('active');
   });
 
   $(document).on('click', 'button[name=moveLeftButton]', function (e) {
     e.preventDefault();
-    console.log('length', RightTableTr.length);
-
-    console.log('RightTableTr', RightTableTr);
+    if ($('.right-table tbody tr').length - 1 === 0) return;
+    $.each($('.right-table tbody tr.active'), function (index, item) {
+      $(item).remove();
+    });
   });
 
   /****************************************************
