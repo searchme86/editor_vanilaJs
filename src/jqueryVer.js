@@ -88,6 +88,28 @@ $(function () {
     return duplicatedDataArray;
   }
 
+  function transformArrayToText(arr, categoryToFilter) {
+    let alertMessage;
+    let textArray = [];
+    let variableToString = categoryToFilter.toString();
+
+    if (!variableToString || variableToString === undefined) return;
+
+    tableColumnTitle.forEach((columnText) => {
+      if (columnText !== variableToString) return;
+    });
+
+    $.each(arr, function (index, item) {
+      textArray.push(item[variableToString]);
+    });
+
+    alertMessage = `"${textArray.join(
+      ','
+    )}" 는/은 이미 항목에 포함되어 있습니다.`;
+
+    return alertMessage;
+  }
+
   function AddTableRowToCurrentTable(targetTable, tablRowArrayToAdd) {
     $.each(tablRowArrayToAdd, function (index, item) {
       let row = $('<tr>');
@@ -156,7 +178,12 @@ $(function () {
       createObjArrayOfTableData(RightDataBeforeClicked)
     );
 
+    console.log('TableRowsDuplicated', TableRowsDuplicated);
+    console.log('TableRowsToAdd', TableRowsToAdd);
+
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
+
+    transformArrayToText(TableRowsDuplicated, 'category');
 
     calculateCurrentRightTableRowsArray();
   });
