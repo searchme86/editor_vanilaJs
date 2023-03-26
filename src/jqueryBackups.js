@@ -57,19 +57,57 @@ $(function () {
       }
     });
 
-    // const filterItemsAgainstRightTable = uniqueLeftTableArray.filter(
-    //   (obj, index) =>
-    //     reference.findIndex(
-    //       (item) => item.tablelistuid === obj.tablelistuid
-    //     ) !== index
-    // );
-
     const filterItemsAgainstRightTable = uniqueLeftTableArray.filter(
       (obj, index) =>
         !reference.some((item) => item.tablelistuid === obj.tablelistuid)
     );
 
     return filterItemsAgainstRightTable;
+  }
+
+  function findDuplicated(arr, reference) {
+    let uniqueLeftTableArray = [];
+
+    $.each(arr, function (i, obj) {
+      if (
+        $.inArray(
+          obj.tablelistuid,
+          $.map(uniqueLeftTableArray, function (item) {
+            return item.tablelistuid;
+          })
+        ) === -1
+      ) {
+        uniqueLeftTableArray.push(obj);
+      }
+    });
+
+    const duplicatedDataArray = uniqueLeftTableArray.filter((obj, index) =>
+      reference.some((item) => item.tablelistuid === obj.tablelistuid)
+    );
+
+    return duplicatedDataArray;
+  }
+
+  function transformArrayToText(arr, categoryToFilter) {
+    let alertMessage;
+    let textArray = [];
+    let variableToString = categoryToFilter.toString();
+
+    if (!variableToString || variableToString === undefined) return;
+
+    tableColumnTitle.forEach((columnText) => {
+      if (columnText !== variableToString) return;
+    });
+
+    $.each(arr, function (index, item) {
+      textArray.push(item[variableToString]);
+    });
+
+    alertMessage = `"${textArray.join(
+      ','
+    )}" 는/은 이미 항목에 포함되어 있습니다.`;
+
+    return alertMessage;
   }
 
   function AddTableRowToCurrentTable(targetTable, tablRowArrayToAdd) {
@@ -122,7 +160,7 @@ $(function () {
 
     let userSelecteTableRow;
     let TableRowsToAdd;
-    // let RightTableRowAfterClicked;
+    let TableRowsDuplicated;
 
     const RightTable = $('#rightTbody');
     let LeftTableTrSelected = $('#leftTbody > tr.active');
@@ -134,9 +172,19 @@ $(function () {
       userSelecteTableRow,
       createObjArrayOfTableData(RightDataBeforeClicked)
     );
+
+    TableRowsDuplicated = findDuplicated(
+      userSelecteTableRow,
+      createObjArrayOfTableData(RightDataBeforeClicked)
+    );
+
+    console.log('TableRowsDuplicated', TableRowsDuplicated);
+    console.log('TableRowsToAdd', TableRowsToAdd);
+
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
 
-    // RightTableRowAfterClicked = calculateCurrentRightTableRowsArray();
+    transformArrayToText(TableRowsDuplicated, 'category');
+
     calculateCurrentRightTableRowsArray();
   });
 });
