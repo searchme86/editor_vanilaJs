@@ -1,4 +1,12 @@
+/****************************************************
+ * 상품항목관리 스크립트
+ ****************************************************/
+
 $(function () {
+  /****************************************************
+   * 버튼 클릭해, 선택항목 우측으로 아이템 복사
+   ****************************************************/
+
   const tableColumnTitle = [
     'tablelistuid',
     'category',
@@ -8,7 +16,8 @@ $(function () {
     'dateToUpload',
   ];
 
-  let LeftTableTr = $('.main_table tbody tr');
+  let LeftTableTr = $('.left-table tbody tr');
+  let AfterRightTableRowAddedLength;
 
   function convertTableRowToObjArray(tableEachRow) {
     let rowData = [];
@@ -107,6 +116,7 @@ $(function () {
       ','
     )}" 는/은 이미 항목에 포함되어 있습니다.`;
 
+    console.log('alertMessage', alertMessage);
     return alertMessage;
   }
 
@@ -136,17 +146,6 @@ $(function () {
 
       targetTable.append(row);
     });
-  }
-
-  function calculateCurrentRightTableRowsArray() {
-    let rightTableTRArray = [];
-
-    $.each($('#rightTbody tr'), function (index, item) {
-      const totalRightTableDataArray = convertTableRowToObjArray($(item));
-      rightTableTRArray.push(totalRightTableDataArray);
-    });
-
-    return rightTableTRArray;
   }
 
   $.each(LeftTableTr, function (index, element) {
@@ -184,7 +183,32 @@ $(function () {
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
 
     transformArrayToText(TableRowsDuplicated, 'category');
+  });
 
-    calculateCurrentRightTableRowsArray();
+  /****************************************************
+   * 버튼 클릭해, 선택항목 아이템 삭제
+   ****************************************************/
+  $(document).on('click', '.right-table tbody tr', function () {
+    $(this).toggleClass('active');
+  });
+
+  $(document).on('click', 'button[name=moveLeftButton]', function (e) {
+    e.preventDefault();
+    if ($('.right-table tbody tr').length - 1 === 0) return;
+    $.each($('.right-table tbody tr.active'), function (index, item) {
+      $(item).remove();
+    });
+  });
+
+  /****************************************************
+   * 버튼 클릭해, 선택항목 아래로 이동
+   ****************************************************/
+  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+    e.preventDefault();
+
+    $($('#rightTbody>tr.active').get().reverse()).each(function () {
+      let next = $(this).next();
+      $(this).insertAfter(next);
+    });
   });
 });
