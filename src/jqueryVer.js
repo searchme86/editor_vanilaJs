@@ -210,4 +210,17 @@ $(function () {
       $(this).insertAfter(next);
     });
   });
+
+  /****************************************************
+   * 버튼 클릭해, 선택항목 위로 이동
+   ****************************************************/
+
+  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+    e.preventDefault();
+
+    $($('#rightTbody>tr.active').get().reverse()).each(function () {
+      let next = $(this).next();
+      $(this).insertAfter(next);
+    });
+  });
 });
