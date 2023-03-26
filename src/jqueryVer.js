@@ -17,7 +17,6 @@ $(function () {
   ];
 
   let LeftTableTr = $('.left-table tbody tr');
-  let AfterRightTableRowAddedLength;
 
   function convertTableRowToObjArray(tableEachRow) {
     let rowData = [];
