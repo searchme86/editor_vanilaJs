@@ -1,4 +1,12 @@
+/****************************************************
+ * 상품항목관리 스크립트
+ ****************************************************/
+
 $(function () {
+  /****************************************************
+   * 버튼 클릭해, 선택항목 우측으로 아이템 복사
+   ****************************************************/
+
   const tableColumnTitle = [
     'tablelistuid',
     'category',
@@ -107,6 +115,7 @@ $(function () {
       ','
     )}" 는/은 이미 항목에 포함되어 있습니다.`;
 
+    console.log('alertMessage', alertMessage);
     return alertMessage;
   }
 
@@ -186,5 +195,40 @@ $(function () {
     transformArrayToText(TableRowsDuplicated, 'category');
 
     calculateCurrentRightTableRowsArray();
+  });
+
+  /****************************************************
+   * 버튼 클릭해, 선택항목 아이템 삭제
+   ****************************************************/
+  const RightTable = $('.right-table tbody');
+  let RightTableTr = $('.right-table tbody tr');
+  $.each(RightTableTr, function (index, element) {
+    $(element).on('click', function () {
+      $(element).toggleClass('activde');
+    });
+  });
+
+  RightTable.on('click', function (event) {
+    let selectedTR = $(event.target).parent().parent();
+    // selectedTR.addClass('active');
+    console.log('selectedTR', selectedTR);
+  });
+
+  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+    e.preventDefault();
+
+    console.log('RightTableTr', RightTableTr);
+  });
+
+  /****************************************************
+   * 버튼 클릭해, 선택항목 아래로 이동
+   ****************************************************/
+  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+    e.preventDefault();
+
+    $($('#rightTbody>tr.active').get().reverse()).each(function () {
+      let next = $(this).next();
+      $(this).insertAfter(next);
+    });
   });
 });
