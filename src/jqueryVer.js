@@ -16,7 +16,7 @@ $(function () {
     'dateToUpload',
   ];
 
-  let LeftTableTr = $('.main_table tbody tr');
+  let LeftTableTr = $('.left-table tbody tr');
 
   function convertTableRowToObjArray(tableEachRow) {
     let rowData = [];
@@ -200,22 +200,15 @@ $(function () {
   /****************************************************
    * 버튼 클릭해, 선택항목 아이템 삭제
    ****************************************************/
-  const RightTable = $('.right-table tbody');
-  let RightTableTr = $('.right-table tbody tr');
-  $.each(RightTableTr, function (index, element) {
-    $(element).on('click', function () {
-      $(element).toggleClass('activde');
-    });
+  let RightTabletbodytr = $('.right-table tbody tr');
+
+  $(document).on('click', '.right-table tbody tr', function () {
+    $(this).toggleClass('active');
   });
 
-  RightTable.on('click', function (event) {
-    let selectedTR = $(event.target).parent().parent();
-    // selectedTR.addClass('active');
-    console.log('selectedTR', selectedTR);
-  });
-
-  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+  $(document).on('click', 'button[name=moveLeftButton]', function (e) {
     e.preventDefault();
+    console.log('length', RightTableTr.length);
 
     console.log('RightTableTr', RightTableTr);
   });
