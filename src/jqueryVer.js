@@ -113,6 +113,7 @@ $(function () {
 
     console.log('textArray.length', textArray.length);
 
+    if (textArray.length === 0) return;
     alertMessage = `"${textArray.join(
       ','
     )}" 는/은 이미 항목에 포함되어 있습니다.`;
