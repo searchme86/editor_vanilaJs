@@ -111,14 +111,11 @@ $(function () {
       textArray.push(item[variableToString]);
     });
 
-    console.log('textArray.length', textArray.length);
-
     if (textArray.length === 0) return;
     alertMessage = `"${textArray.join(
       ','
     )}" 는/은 이미 항목에 포함되어 있습니다.`;
 
-    console.log('alertMessage', alertMessage);
     return alertMessage;
   }
 
@@ -178,9 +175,6 @@ $(function () {
       userSelecteTableRow,
       createObjArrayOfTableData(RightDataBeforeClicked)
     );
-
-    console.log('TableRowsDuplicated', TableRowsDuplicated);
-    console.log('TableRowsToAdd', TableRowsToAdd);
 
     AddTableRowToCurrentTable(RightTable, TableRowsToAdd);
 
