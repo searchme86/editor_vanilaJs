@@ -13,7 +13,7 @@ $(function () {
     'categoryTell',
     'categoryVerify',
     'uploader',
-    'dateToUpload',
+    'dateToUpload'
   ];
 
   let LeftTableTr = $('.left-table tbody tr');
@@ -27,7 +27,7 @@ $(function () {
     const createdNewTableRowObj = tableColumnTitle.reduce((acc, key, index) => {
       return {
         ...acc,
-        [key]: rowData[index],
+        [key]: rowData[index]
       };
     }, {});
     return createdNewTableRowObj;
@@ -110,6 +110,8 @@ $(function () {
     $.each(arr, function (index, item) {
       textArray.push(item[variableToString]);
     });
+
+    console.log('textArray.length', textArray.length);
 
     alertMessage = `"${textArray.join(
       ','
@@ -215,12 +217,12 @@ $(function () {
    * 버튼 클릭해, 선택항목 위로 이동
    ****************************************************/
 
-  $(document).on('click', 'button[name=moveDownItem]', function (e) {
+  $(document).on('click', 'button[name=moveUpItem]', function (e) {
     e.preventDefault();
 
-    $($('#rightTbody>tr.active').get().reverse()).each(function () {
-      let next = $(this).next();
-      $(this).insertAfter(next);
+    $('#rightTbody>tr.active').each(function () {
+      let before = $(this).prev();
+      $(this).insertBefore(before);
     });
   });
 });
