@@ -61,14 +61,6 @@ $(function () {
     //4.
     previousDOMClicked = this;
   });
-
-  $(document).on('click', 'li', function (e) {
-    console.log('new e', e.target);
-    if (e.shiftKey && e.target === this) {
-      console.log('그것을 선택했다 ㅋ');
-      $(this).removeClass('active');
-    }
-  });
 });
 
 $(document).ready(function () {
