@@ -88,3 +88,84 @@ $(document).ready(function () {
     }
   });
 });
+
+
+
+    $(document).on("click", "button[name=btnTableMoveRight]", function(e) {
+        e.preventDefault();
+
+        EDITING_FLAG = true;
+
+        $($("input[name=tableCheckbox]:checked").get().reverse()).each(function () {
+
+
+    console.log('===========루프시작===========')
+
+            let currentCheckedThisItem = $(this).parent().parent()
+            let currentCheckedDataUidOfThisItem = currentCheckedThisItem.data('itemuid')
+
+            let prevItemOfChecked = currentCheckedThisItem.prev()
+            let prevItemDepthNumOfCheckedItem;
+            let CheckedCurrentDepthNum;
+
+            /*if( prevItemOfChecked.length ===0  ){
+                prevItemOfChecked.attr("data-itemdepth", 0)
+                prevItemOfChecked.css("padding-left", "0px");
+
+            }else{
+                prevItemDepthNumOfCheckedItem = parseInt(prevItemOfChecked.data('itemdepth'))
+            }*/
+
+
+             prevItemDepthNumOfCheckedItem = parseInt(prevItemOfChecked.data('itemdepth'))
+
+            console.log('// 현재 순환하는 아이템')
+            console.log(currentCheckedThisItem)
+
+            console.log('//(선택한 항목)이전항목?')
+            console.log(prevItemOfChecked)
+
+            console.log('//(선택한 항목)이전항목의 prevItemDepthNumOfCheckedItem')
+            console.log(prevItemDepthNumOfCheckedItem)
+
+            console.log('//(선택한 항목)이전항목의 prevItemDepthNumOfCheckedItem의 TYPE')
+            console.log(typeof prevItemDepthNumOfCheckedItem)
+
+
+
+            if(currentCheckedDataUidOfThisItem === EMPTY_TABLE_UID) {
+                CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem
+                CheckedCurrentDepthNum += 1;
+            } else {
+                CheckedCurrentDepthNum = parseInt(prevItemDepthNumOfCheckedItem) + 1;
+                console.log('현재 아이템의 DepthNum을 구하는, Number(prevItemDepthNumOfCheckedItem) + 1 이후',CheckedCurrentDepthNum )
+            }
+
+            currentCheckedThisItem.attr("data-itemdepth", CheckedCurrentDepthNum)
+
+            console.log('6.PADDING_SIZE',PADDING_SIZE)
+            console.log('7.CheckedCurrentDepthNum',CheckedCurrentDepthNum)
+
+
+
+
+            console.log('(parseInt(CheckedCurrentDepthNum) * PADDING_SIZE).toString()',(parseInt(CheckedCurrentDepthNum) * PADDING_SIZE).toString())
+            console.log('(parseInt(CheckedCurrentDepthNum) * PADDING_SIZE).toString() type',typeof (parseInt(CheckedCurrentDepthNum) * PADDING_SIZE).toString())
+
+            let spaceStyle = (parseInt(CheckedCurrentDepthNum) * PADDING_SIZE).toString() + 'px';
+
+            console.log('8.spaceStyle',spaceStyle)
+            console.log('8.spaceStyle typeof', typeof spaceStyle)
+            /*currentCheckedThisItem.css('padding-left', spaceStyle);*/
+              currentCheckedThisItem.css("padding-left", spaceStyle);
+
+            console.log('/*******************************/')
+             console.log('마지막 체크.CheckedCurrentDepthNum',CheckedCurrentDepthNum)
+             console.log('/*******************************/')
+
+
+            console.log('배열 하나의 요소의 작업이 모두 완료된 이후,prevItemDepthNumOfCheckedItem  ', prevItemDepthNumOfCheckedItem)
+
+            console.log('===========루프종료===========')
+        });
+    });
