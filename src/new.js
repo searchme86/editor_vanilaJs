@@ -13,27 +13,16 @@ $(function () {
     return NumberValueType;
   }
 
-  //돔이 존재하는지 여부를 체크하다
-  //인자로 들어온 돔의 뎁스 넘을 0으로 만든다.
-  //돔을 받는다.
-  //돔이 없으면
-  //0이란 숫자를 반환한다.
   function checkIfDomExsited(DOM) {
-    // 이전 돔의 갯수가 0, 즉 없다면,
-    // 이전 돔의 뎁스숫자는 0으로 한다.
     let elementDepthNum;
     if ($(DOM).length === 0 && $(DOM).prev() === undefined) {
       elementDepthNum = 0;
       return elementDepthNum;
     }
-    //돔이 존재할 경우 로직을 적어야 함
-    // return
-    // 인자로 넘어온 돔의 인덱스,
-    // 인덱스가 리턴되도록 설정
   }
 
   //value가 NaN인지 확인
-  function checkIfValueNaN(DOM, value) {
+  function checkIfValueNaN(value) {
     if (isNaN(value)) {
     }
   }
