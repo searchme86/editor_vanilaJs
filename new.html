@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>서식별 문서관리</title>
+    <link rel="stylesheet" href="src/reset.css" />
+    <link rel="stylesheet" href="src/layout.css" />
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <section class="base_pd">
+      <div class="table_wrap">
+        <div class="search_header">
+          <div class="search">
+            <img class="icon" src="/resource/image/icon/search.svg" alt="" />
+            <input type="text" placeholder="분류명" />
+          </div>
+          <button data-modalbtn="reg">
+            <img
+              class="icon"
+              src="/resource/image/icon/doc_create_item.svg"
+              alt=""
+            />
+          </button>
+          <button data-modalbtn="reg" data-regmode="modify">
+            <img
+              class="icon"
+              src="/resource/image/icon/doc_edit_item.svg"
+              alt=""
+            />
+          </button>
+        </div>
+        <div class="table">
+          <table>
+            <colgroup>
+              <col style="width: 25%" />
+              <col style="width: 30%" />
+              <col style="width: 22.5%" />
+              <col style="width: 22.5%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="table_sort td_c" data-sort="">
+                  <div class="td_c">
+                    <span>분류명</span>
+                    <div class="sort_wrap">
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon asc"
+                        alt=""
+                      />
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon desc"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </th>
+                <th class="table_sort" data-sort="">
+                  <div class="td_c">
+                    <span>분류구분</span>
+                    <div class="sort_wrap">
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon asc"
+                        alt=""
+                      />
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon desc"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </th>
+                <th class="table_sort" data-sort="">
+                  <div class="td_c">
+                    <span>등록자</span>
+                    <div class="sort_wrap">
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon asc"
+                        alt=""
+                      />
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon desc"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </th>
+                <th class="table_sort" data-sort="">
+                  <div class="td_c">
+                    <span>등록일시</span>
+                    <div class="sort_wrap">
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon asc"
+                        alt=""
+                      />
+                      <img
+                        src="/resource/image/icon/sort_icon.svg"
+                        class="sort_icon desc"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="active">
+                <td class="td_c"><span>상품유형</span></td>
+                <td class="td_c"><span>상품유형</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>판매시작일자</span></td>
+                <td class="td_c"><span>시기</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>판매종료일자</span></td>
+                <td class="td_c"><span>종기</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>약관개시일자</span></td>
+                <td class="td_c"><span>시기</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>예정이율</span></td>
+                <td class="td_c"><span>예정이율</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>판매채널</span></td>
+                <td class="td_c"><span>판매채널</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>저축성</span></td>
+                <td class="td_c"><span>상품종류</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>보장성</span></td>
+                <td class="td_c"><span>상품종류</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>보장유형</span></td>
+                <td class="td_c"><span>상품종류</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+              <tr>
+                <td class="td_c"><span>보장기간</span></td>
+                <td class="td_c"><span>종기</span></td>
+                <td class="td_c"><span>admin</span></td>
+                <td class="td_c"><span>2023-04-01</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="index_wrap">
+        <p class="em_desc index_header">선택된 분류 내용</p>
+        <div class="index_content">
+          <div class="btn_wrap">
+            <div class="left_area">
+              <button name="btnTableAdd" title="항목 추가">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_add_subject.svg"
+                  alt=""
+                />
+              </button>
+              <button name="btnTableMoveDown" title="선택 항목 한칸 아래 이동">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_moveDown_subject.svg"
+                  alt=""
+                />
+              </button>
+              <button name="btnTableMoveUp" title="선택 항목 한칸 위 이동">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_moveUp_subject.svg"
+                  alt=""
+                />
+              </button>
+              <button name="btnTableMoveLeft" title="선택 항목 왼쪽 이동">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_moveLeft_subject.svg"
+                  alt=""
+                />
+              </button>
+              <button name="btnTableMoveRight" title="선택 항목 오른쪽 이동">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_moveRight_subject.svg"
+                  alt=""
+                />
+              </button>
+            </div>
+            <div class="right_area">
+              <button>
+                <img
+                  class="icon"
+                  src="/resource/image/icon/template_item_refresh_item.svg"
+                  alt=""
+                />
+              </button>
+              <button data-modalbtn="reg" data-regmode="copy">
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_create_item.svg"
+                  alt=""
+                />
+              </button>
+              <button>
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_save_subject.svg"
+                  alt=""
+                />
+              </button>
+              <button>
+                <img
+                  class="icon"
+                  src="/resource/image/icon/doc_drop_item.svg"
+                  alt=""
+                />
+              </button>
+            </div>
+          </div>
+          <div class="list_wrap">
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_3583567E8F5SGSD3623"
+              data-itemuid="3583567E8F5SGSD3623"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="상해보험"
+                autocomplete="off"
+              />
+            </div>
+
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_8SDFTWFH5RW274SAC9D"
+              data-itemuid="8SDFTWFH5RW274SAC9D"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="운전자보험"
+                autocomplete="off"
+              />
+            </div>
+
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_352DFG46646DRGFF33F"
+              data-itemuid="352DFG46646DRGFF33F"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="종합보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_477DF34FF51358DRFGR"
+              data-itemuid="477DF34FF51358DRFGR"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="어린이보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_23BS855F6SDWGD723FE"
+              data-itemuid="23BS855F6SDWGD723FE"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="고용보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_2ER342BF23RQ3ETRF74"
+              data-itemuid="2ER342BF23RQ3ETRF74"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="건강보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_23031314084303A2A70"
+              data-itemuid="23031314084303A2A70"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="산재보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_1054329123270C06512"
+              data-itemuid="1054329123270C06512"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="생명보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_5374316175457103FF3"
+              data-itemuid="5374316175457103FF3"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="손해보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_6785345534762DAC9D8"
+              data-itemuid="6785345534762DAC9D8"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="화재보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_83DGRS64286DAFE13DD"
+              data-itemuid="83DGRS64286DAFE13DD"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="해상보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_793G191851533CFDED7"
+              data-itemuid="793G191851533CFDED7"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="보증보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_23463751234364F79C3"
+              data-itemuid="23463751234364F79C3"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="자동차보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_35234637DD4245FRQSG"
+              data-itemuid="35234637DD4245FRQSG"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="질병보험"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              class="list_item"
+              name="tableDiv"
+              id="table_841246445742742DAC9"
+              data-itemuid="841246445742742DAC9"
+              data-itemdepth="0"
+            >
+              <label class="check_label" style="margin-right: 2px">
+                <input type="checkbox" name="tableCheckbox" />
+                <div class="check_style">
+                  <img src="/resource/image/icon/check.svg" alt="" />
+                </div>
+              </label>
+              <!--  <span class="item_num" name="tableNumber"></span> -->
+              <input
+                type="text"
+                name="btnDocSearch"
+                value="실손의료보험"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="src/new.js"></script>
+  </body>
+</html>
