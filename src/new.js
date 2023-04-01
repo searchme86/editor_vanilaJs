@@ -51,9 +51,8 @@ $(function () {
   }
 
   function checkIfPrevDomExsited(DOM) {
-    let prevElementDepthNum;
     if ($(DOM).length === 0 && $(DOM).prev() === undefined) {
-      setDataSetAttribute($(DOM), 'itemdepth', prevElementDepthNum);
+      setDataSetAttribute($(DOM), 'data-itemdepth', 0);
       applyPaddingStyle(DOM, 0);
     } else {
       return DOM;
@@ -127,7 +126,7 @@ $(function () {
           prevItemDepthNum
         );
 
-        currentCheckedThisItem.attr('data-item-depth', currentItemDepthNum);
+        currentCheckedThisItem.attr('data-itemdepth', currentItemDepthNum);
 
         applyPaddingStyle(currentCheckedThisItem, currentItemDepthNum);
       }
