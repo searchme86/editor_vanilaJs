@@ -1,22 +1,17 @@
 $(function () {
-  //값의 타입을 숫자로 텍스트로 변경
   function transferValueToString(value) {
-    let stringValueType = value.toString();
-    return stringValueType;
+    if (!typeof value === 'string') {
+      let stringValueType = value.toString();
+      return stringValueType;
+    }
+    return value;
   }
 
-  //값의 타입을 숫자로 변경
   function transferValueToNumber(value) {
-    let NumberValueType = value.parseInt();
+    let NumberValueType = parseInt(value);
     return NumberValueType;
   }
 
-  //완료
-  //value가 NaN인지 확인
-  //ifValueOfNaN가 NaN이면 0을 반환
-  //NaN일 경우, 0으로 값을 반환하도록 설정
-  //=> 돔이 없어서 계산된 값이 없기 때문에, 돔이 없기에 해당 dataSet value가 0이 되어야 한다.
-  //ifValueOfNaN가 값이 있으면, 그 값을 반환
   function checkIfValueNaN(ifValueOfNaN) {
     let itemDepthNumber;
 
@@ -28,54 +23,99 @@ $(function () {
     }
   }
 
-  //'item-depth'라고 정의한 dataSet 값을 추출하는 목적함수
-  //만약 해당 돔이 없을 경우,0으로 값을 반환하도록 함
-  function getDataSetAttribute(DOM, attributeName) {
-    let NumberTypeValue;
+  function getDataSetByAttribute(DOM, iteratingDOM, attributeName) {
+    let domDataValueByAttribute;
     let valueThroughNaNCheck;
 
-    NumberTypeValue = transferValueToNumber(
-      DOM.data(transferValueToString(attributeName))
+    console.log(
+      '-------------------------getDataSetByAttribute-------------------------'
     );
 
-    valueThroughNaNCheck = checkIfValueNaN(NumberTypeValue);
+    if (transferValueToString(attributeName) === 'itemdepth') {
+      console.log('previousDOM', DOM);
 
-    return valueThroughNaNCheck;
+      if (DOM === undefined) {
+        domDataValueByAttribute = transferValueToNumber(
+          iteratingDOM
+            .parent()
+            .parent()
+            .data(transferValueToString(attributeName))
+        );
+        valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+        return valueThroughNaNCheck;
+      } else {
+        domDataValueByAttribute = transferValueToNumber(
+          DOM.data(transferValueToString(attributeName))
+        );
+        valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+        return valueThroughNaNCheck;
+      }
+    }
+
+    // domDataValueByAttribute = DOM.data(transferValueToString(attributeName));
+    // valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+
+    // return valueThroughNaNCheck;
   }
 
-  function setDataSetAttribute(DOM, attributeName, depthNum) {
-    if (typeof attributeName !== 'string') {
-      DOM.attr(attributeName.toString(), depthNum);
+  function setDataSetValueByAttribute(
+    DOM,
+    iteratingDOM,
+    attributeName,
+    depthNum
+  ) {
+    if (DOM.length === 0 || DOM === undefined) {
+      iteratingDOM.parent().parent().attr(attributeName.toString(), depthNum);
+      return;
     }
+
     DOM.attr(attributeName, depthNum);
   }
 
-  function checkIfPrevDomExsited(DOM) {
-    if ($(DOM).length === 0 && $(DOM).prev() === undefined) {
-      setDataSetAttribute($(DOM), 'data-itemdepth', 0);
-      applyPaddingStyle(DOM, 0);
+  function checkIfPrevDOMExistedToReturnDOM(DOM, iteratingDOM) {
+    if (DOM.length === 0 || DOM === undefined) {
+      setDataSetValueByAttribute(DOM, iteratingDOM, 'data-itemdepth', 0);
+      applyPaddingStyle(DOM, iteratingDOM, 0);
     } else {
+      console.log('previousDOM', DOM);
       return DOM;
     }
   }
 
-  function applyPaddingStyle(DOM, depthNum) {
+  function applyPaddingStyle(DOM, iteratingDOM, depthNum) {
     const PADDING_SIZE = 12;
 
+    let currentItemOfIterating = iteratingDOM;
     let valueTransformedString = (parseInt(depthNum) * PADDING_SIZE).toString();
     let spaceStyle = valueTransformedString + 'px';
+
+    if (DOM.length === 0 || DOM === undefined) {
+      currentItemOfIterating.parent().parent().css('padding-left', spaceStyle);
+    }
 
     DOM.css('padding-left', spaceStyle);
   }
 
-  function calcPrevItemDepthNum(currentCheckedThisItem, attributeName) {
-    let prevElementsExisted;
-    let NumberTypeValue;
+  function calcPrevItemDepthNum(
+    currentCheckedThisItem,
+    attributeName,
+    iteratingDOM
+  ) {
+    let prevElements;
+    let domDataValueByAttribute;
 
-    prevElementsExisted = checkIfPrevDomExsited(currentCheckedThisItem.prev());
-    NumberTypeValue = getDataSetAttribute(prevElementsExisted, attributeName);
+    prevElements = checkIfPrevDOMExistedToReturnDOM(
+      currentCheckedThisItem.prev(),
+      iteratingDOM
+    );
 
-    return NumberTypeValue;
+    domDataValueByAttribute = getDataSetByAttribute(
+      prevElements,
+      iteratingDOM,
+      attributeName
+    );
+
+    return domDataValueByAttribute;
   }
 
   function calcCurrentCheckedItemDepthNum(
@@ -89,7 +129,7 @@ $(function () {
     let currentDOM = DOM;
     let attributeToFind = attributeName;
 
-    let currentDataUid = getDataSetAttribute(currentDOM, attributeToFind);
+    let currentDataUid = getDataSetByAttribute(currentDOM, attributeToFind);
 
     if (currentDataUid === EMPTY_TABLE_UID) {
       CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem;
@@ -102,8 +142,7 @@ $(function () {
     }
   }
 
-  // =================================================================================
-
+  // ==================================================================
   $(document).on('click', 'button[name=btnTableMoveRight]', function (e) {
     e.preventDefault();
 
@@ -117,8 +156,14 @@ $(function () {
         }
         let CheckedCurrentDepthNum;
 
+        let iteratingThisDOM = $(this);
         let currentCheckedThisItem = $(this).parent().parent();
-        let prevItemDepthNum = calcPrevItemDepthNum(currentCheckedThisItem);
+
+        let prevItemDepthNum = calcPrevItemDepthNum(
+          currentCheckedThisItem,
+          'itemdepth',
+          iteratingThisDOM
+        );
 
         let currentItemDepthNum = calcCurrentCheckedItemDepthNum(
           currentCheckedThisItem,
@@ -128,7 +173,11 @@ $(function () {
 
         currentCheckedThisItem.attr('data-itemdepth', currentItemDepthNum);
 
-        applyPaddingStyle(currentCheckedThisItem, currentItemDepthNum);
+        applyPaddingStyle(
+          currentCheckedThisItem,
+          iteratingThisDOM,
+          currentItemDepthNum
+        );
       }
     );
   });
