@@ -17,22 +17,19 @@ $(function () {
   function transferValueToNumber(value) {
     let NumberValueType;
 
-    if (!value) {
+    if (value === ' ') {
       NumberValueType = 0;
-      console.log('-----------!value-----------', NumberValueType);
       return NumberValueType;
-    } else if (typeof value === 'Object') {
-      let parsedValue = value?.itemdepth;
-      NumberValueType = parseInt(parsedValue);
-      console.log(
-        '-----------typeof value === Object-----------',
-        NumberValueType
-      );
+    } else if (typeof value === 'object') {
+      NumberValueType = parseInt(value?.itemdepth);
+      console.log('NumberValueType for object', NumberValueType);
+      console.log('typeof NumberValueType', typeof NumberValueType);
       return NumberValueType;
     }
+
     NumberValueType = parseInt(value);
     console.log(
-      '-----------NumberValueType = parseInt(value)-----------',
+      "NumberValueType for not both '  ' and object",
       NumberValueType
     );
     return NumberValueType;
@@ -80,20 +77,12 @@ $(function () {
           .parent()
           .data(transferValueToString(attrValue))
       );
-      //domDataValueByAttribute
-      console.log('--------DOM.length === 0--------');
-      console.log('domDataValueByAttribute', domDataValueByAttribute);
-
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
     } else {
       domDataValueByAttribute = transferValueToNumber(
         DOM.data(transferValueToString(attrValue))
       );
-      //domDataValueByAttribute
-      console.log('--------DOM.length !== 0--------');
-      console.log('domDataValueByAttribute', domDataValueByAttribute);
-
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
     }
@@ -159,7 +148,6 @@ $(function () {
       attributeName
     );
 
-    console.log('domDataValueByAttribute', domDataValueByAttribute);
     return domDataValueByAttribute;
   }
 
