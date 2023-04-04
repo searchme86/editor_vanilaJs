@@ -1,4 +1,5 @@
 $(function () {
+  //값의 타입을 string으로 변경하는 함수
   function transferValueToString(value) {
     if (!typeof value === 'string') {
       let stringValueType = value.toString();
@@ -7,8 +8,33 @@ $(function () {
     return value;
   }
 
+  //값의 타입을 number로 변경하는 함수
+  //value가 객체일 경우
+  // value ={itemdepth:0, itemuid:'22222'}
+  //value가 숫자일 경우를
+  //모두 처리하는 함수를 만들어야 함
+  //value가 없을때,
   function transferValueToNumber(value) {
-    let NumberValueType = parseInt(value);
+    let NumberValueType;
+
+    if (!value) {
+      NumberValueType = 0;
+      console.log('-----------!value-----------', NumberValueType);
+      return NumberValueType;
+    } else if (typeof value === 'Object') {
+      let parsedValue = value?.itemdepth;
+      NumberValueType = parseInt(parsedValue);
+      console.log(
+        '-----------typeof value === Object-----------',
+        NumberValueType
+      );
+      return NumberValueType;
+    }
+    NumberValueType = parseInt(value);
+    console.log(
+      '-----------NumberValueType = parseInt(value)-----------',
+      NumberValueType
+    );
     return NumberValueType;
   }
 
@@ -16,9 +42,6 @@ $(function () {
     let itemDepthNumber;
     let checkNum;
     checkNum = ifValueOfNaN;
-
-    console.log('ifValueOfNaN,함수인자', ifValueOfNaN);
-    console.log('checkNum', checkNum);
 
     if (isNaN(checkNum)) {
       itemDepthNumber = 0;
@@ -49,6 +72,7 @@ $(function () {
       return valueThroughNaNCheck;
     }
 
+    //제일 첫번째 돔 선택될 경우
     if (DOM.length === 0) {
       domDataValueByAttribute = transferValueToNumber(
         iteratingCurrentDOM
@@ -56,6 +80,9 @@ $(function () {
           .parent()
           .data(transferValueToString(attrValue))
       );
+      //domDataValueByAttribute
+      console.log('--------DOM.length === 0--------');
+      console.log('domDataValueByAttribute', domDataValueByAttribute);
 
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
@@ -63,6 +90,10 @@ $(function () {
       domDataValueByAttribute = transferValueToNumber(
         DOM.data(transferValueToString(attrValue))
       );
+      //domDataValueByAttribute
+      console.log('--------DOM.length !== 0--------');
+      console.log('domDataValueByAttribute', domDataValueByAttribute);
+
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
     }
@@ -87,8 +118,6 @@ $(function () {
   }
 
   function checkIfPrevDOMExistedToReturnDOM(DOM, iteratingCurrentDOM) {
-    console.log('DOM,prev()', DOM);
-
     if (DOM.length === 0 || DOM === undefined) {
       setDataSetValueByAttribute(DOM, iteratingCurrentDOM, 'data-itemdepth', 0);
       applyPaddingStyle(DOM, iteratingCurrentDOM, 0);
@@ -180,6 +209,8 @@ $(function () {
         let iteratingThisDOM = $(this);
         let currentCheckedThisItem = $(this).parent().parent();
 
+        console.log('**----------code starts----------**');
+
         let prevItemDepthNum = calcPrevItemDepthNum(
           currentCheckedThisItem,
           'itemdepth',
@@ -199,6 +230,8 @@ $(function () {
           iteratingThisDOM,
           currentItemDepthNum
         );
+
+        console.log('**----------code ends----------**');
       }
     );
   });
