@@ -8,31 +8,28 @@ $(function () {
     return value;
   }
 
-  //값의 타입을 number로 변경하는 함수
-  //value가 객체일 경우
-  // value ={itemdepth:0, itemuid:'22222'}
-  //value가 숫자일 경우를
-  //모두 처리하는 함수를 만들어야 함
-  //value가 없을때,
   function transferValueToNumber(value) {
-    let NumberValueType;
+    // let NumberValueType;
 
-    if (value === ' ') {
-      NumberValueType = 0;
-      return NumberValueType;
-    } else if (typeof value === 'object') {
-      NumberValueType = parseInt(value?.itemdepth);
-      console.log('NumberValueType for object', NumberValueType);
-      console.log('typeof NumberValueType', typeof NumberValueType);
-      return NumberValueType;
-    }
+    // if (value === ' ') {
+    //   NumberValueType = 0;
+    //   return NumberValueType;
+    // } else if (typeof value === 'object') {
+    //   NumberValueType = parseInt(value?.itemdepth);
+    //   console.log('NumberValueType for object', NumberValueType);
+    //   console.log('typeof NumberValueType', typeof NumberValueType);
+    //   return NumberValueType;
+    // }
 
-    NumberValueType = parseInt(value);
-    console.log(
-      "NumberValueType for not both '  ' and object",
-      NumberValueType
-    );
-    return NumberValueType;
+    // NumberValueType = parseInt(value);
+    // console.log(
+    //   "NumberValueType for not both '  ' and object",
+    //   NumberValueType
+    // );
+    // return NumberValueType;
+
+    if (value === ' ') return 0;
+    return typeof value === 'object' ? value['itemdepth'] : parseInt(value);
   }
 
   function checkIfValueNaN(ifValueOfNaN) {
@@ -54,16 +51,12 @@ $(function () {
   function getDataSetByAttribute(DOM, iteratingCurrentDOM, attributeName) {
     let domDataValueByAttribute;
     let valueThroughNaNCheck;
-    let attrValue;
 
-    attrValue = attributeName;
+    console.log('//-----getDataSetByAttribute-----//');
+    console.log('***--DOM--***', DOM);
+    console.log('***--iteratingCurrentDOM--***', iteratingCurrentDOM);
+    console.log('***--attributeName--***', attributeName);
 
-    //특정돔의 prev값이 없어, undefined 일 경우,
-    //즉, 제일 첫번째 돔이라는 것이기 때문에
-    //-1을 반환하여,
-    //CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem;
-    //CheckedCurrentDepthNum += 1;
-    //0으로 만든다.
     if (DOM === undefined) {
       valueThroughNaNCheck = -1;
       return valueThroughNaNCheck;
@@ -75,13 +68,24 @@ $(function () {
         iteratingCurrentDOM
           .parent()
           .parent()
-          .data(transferValueToString(attrValue))
+          .data(transferValueToString(attributeName))
       );
+
+      console.log(
+        'DOM.length === 0, domDataValueByAttribute',
+        domDataValueByAttribute
+      );
+
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
     } else {
       domDataValueByAttribute = transferValueToNumber(
-        DOM.data(transferValueToString(attrValue))
+        DOM.data(transferValueToString(attributeName))
+      );
+
+      console.log(
+        'DOM.length !== 0, domDataValueByAttribute',
+        domDataValueByAttribute
       );
       valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
       return valueThroughNaNCheck;
@@ -154,23 +158,21 @@ $(function () {
   function calcCurrentCheckedItemDepthNum(
     DOM,
     attributeName,
+    iteratingThisDOM,
     prevItemDepthNumOfCheckedItem
   ) {
     const EMPTY_TABLE_UID = 'table_0000';
 
     let CheckedCurrentDepthNum;
     let currentDOM = DOM;
-    let attributeToFind = attributeName;
 
-    let currentDataUid = getDataSetByAttribute(currentDOM, attributeToFind);
-
-    // prevItemDepthNumOfCheckedItem이 undefined라면 이전 아이템이 없다는 것
-    // prevItemDepthNumOfCheckedItem이 undefined라면
-    // prevItemDepthNumOfCheckedItem은 -1을 반환
+    let currentDataUid = getDataSetByAttribute(
+      currentDOM,
+      iteratingThisDOM,
+      attributeName
+    );
 
     if (currentDataUid === EMPTY_TABLE_UID) {
-      // prevItemDepthNumOfCheckedItem이 undefined라면 어떻게 처리?
-
       CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem;
       CheckedCurrentDepthNum += 1;
       return CheckedCurrentDepthNum;
@@ -208,6 +210,7 @@ $(function () {
         let currentItemDepthNum = calcCurrentCheckedItemDepthNum(
           currentCheckedThisItem,
           'itemuid',
+          iteratingThisDOM,
           prevItemDepthNum
         );
 
