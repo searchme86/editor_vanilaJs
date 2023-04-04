@@ -14,78 +14,93 @@ $(function () {
 
   function checkIfValueNaN(ifValueOfNaN) {
     let itemDepthNumber;
+    let checkNum;
+    checkNum = ifValueOfNaN;
 
-    if (isNaN(ifValueOfNaN)) {
+    console.log('ifValueOfNaN,함수인자', ifValueOfNaN);
+    console.log('checkNum', checkNum);
+
+    if (isNaN(checkNum)) {
       itemDepthNumber = 0;
       return itemDepthNumber;
+    } else if (checkNum === undefined) {
+      itemDepthNumber = -1;
+      return itemDepthNumber;
     } else {
-      return ifValueOfNaN;
+      return checkNum;
     }
   }
 
-  function getDataSetByAttribute(DOM, iteratingDOM, attributeName) {
+  function getDataSetByAttribute(DOM, iteratingCurrentDOM, attributeName) {
     let domDataValueByAttribute;
     let valueThroughNaNCheck;
+    let attrValue;
 
-    console.log(
-      '-------------------------getDataSetByAttribute-------------------------'
-    );
+    attrValue = attributeName;
 
-    if (transferValueToString(attributeName) === 'itemdepth') {
-      console.log('previousDOM', DOM);
-
-      if (DOM === undefined) {
-        domDataValueByAttribute = transferValueToNumber(
-          iteratingDOM
-            .parent()
-            .parent()
-            .data(transferValueToString(attributeName))
-        );
-        valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
-        return valueThroughNaNCheck;
-      } else {
-        domDataValueByAttribute = transferValueToNumber(
-          DOM.data(transferValueToString(attributeName))
-        );
-        valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
-        return valueThroughNaNCheck;
-      }
+    //특정돔의 prev값이 없어, undefined 일 경우,
+    //즉, 제일 첫번째 돔이라는 것이기 때문에
+    //-1을 반환하여,
+    //CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem;
+    //CheckedCurrentDepthNum += 1;
+    //0으로 만든다.
+    if (DOM === undefined) {
+      valueThroughNaNCheck = -1;
+      return valueThroughNaNCheck;
     }
 
-    // domDataValueByAttribute = DOM.data(transferValueToString(attributeName));
-    // valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+    if (DOM.length === 0) {
+      domDataValueByAttribute = transferValueToNumber(
+        iteratingCurrentDOM
+          .parent()
+          .parent()
+          .data(transferValueToString(attrValue))
+      );
 
-    // return valueThroughNaNCheck;
+      valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+      return valueThroughNaNCheck;
+    } else {
+      domDataValueByAttribute = transferValueToNumber(
+        DOM.data(transferValueToString(attrValue))
+      );
+      valueThroughNaNCheck = checkIfValueNaN(domDataValueByAttribute);
+      return valueThroughNaNCheck;
+    }
   }
 
   function setDataSetValueByAttribute(
     DOM,
-    iteratingDOM,
+    iteratingCurrentDOM,
     attributeName,
     depthNum
   ) {
+    let attrValue = attributeName;
+
     if (DOM.length === 0 || DOM === undefined) {
-      iteratingDOM.parent().parent().attr(attributeName.toString(), depthNum);
-      return;
+      iteratingCurrentDOM
+        .parent()
+        .parent()
+        .attr(attrValue.toString(), depthNum);
     }
 
-    DOM.attr(attributeName, depthNum);
+    DOM.attr(attrValue, depthNum);
   }
 
-  function checkIfPrevDOMExistedToReturnDOM(DOM, iteratingDOM) {
+  function checkIfPrevDOMExistedToReturnDOM(DOM, iteratingCurrentDOM) {
+    console.log('DOM,prev()', DOM);
+
     if (DOM.length === 0 || DOM === undefined) {
-      setDataSetValueByAttribute(DOM, iteratingDOM, 'data-itemdepth', 0);
-      applyPaddingStyle(DOM, iteratingDOM, 0);
+      setDataSetValueByAttribute(DOM, iteratingCurrentDOM, 'data-itemdepth', 0);
+      applyPaddingStyle(DOM, iteratingCurrentDOM, 0);
     } else {
-      console.log('previousDOM', DOM);
       return DOM;
     }
   }
 
-  function applyPaddingStyle(DOM, iteratingDOM, depthNum) {
+  function applyPaddingStyle(DOM, iteratingCurrentDOM, depthNum) {
     const PADDING_SIZE = 12;
 
-    let currentItemOfIterating = iteratingDOM;
+    let currentItemOfIterating = iteratingCurrentDOM;
     let valueTransformedString = (parseInt(depthNum) * PADDING_SIZE).toString();
     let spaceStyle = valueTransformedString + 'px';
 
@@ -99,22 +114,23 @@ $(function () {
   function calcPrevItemDepthNum(
     currentCheckedThisItem,
     attributeName,
-    iteratingDOM
+    iteratingCurrentDOM
   ) {
     let prevElements;
     let domDataValueByAttribute;
 
     prevElements = checkIfPrevDOMExistedToReturnDOM(
       currentCheckedThisItem.prev(),
-      iteratingDOM
+      iteratingCurrentDOM
     );
 
     domDataValueByAttribute = getDataSetByAttribute(
       prevElements,
-      iteratingDOM,
+      iteratingCurrentDOM,
       attributeName
     );
 
+    console.log('domDataValueByAttribute', domDataValueByAttribute);
     return domDataValueByAttribute;
   }
 
@@ -131,7 +147,13 @@ $(function () {
 
     let currentDataUid = getDataSetByAttribute(currentDOM, attributeToFind);
 
+    // prevItemDepthNumOfCheckedItem이 undefined라면 이전 아이템이 없다는 것
+    // prevItemDepthNumOfCheckedItem이 undefined라면
+    // prevItemDepthNumOfCheckedItem은 -1을 반환
+
     if (currentDataUid === EMPTY_TABLE_UID) {
+      // prevItemDepthNumOfCheckedItem이 undefined라면 어떻게 처리?
+
       CheckedCurrentDepthNum = prevItemDepthNumOfCheckedItem;
       CheckedCurrentDepthNum += 1;
       return CheckedCurrentDepthNum;
@@ -142,7 +164,6 @@ $(function () {
     }
   }
 
-  // ==================================================================
   $(document).on('click', 'button[name=btnTableMoveRight]', function (e) {
     e.preventDefault();
 
