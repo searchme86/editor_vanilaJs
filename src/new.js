@@ -1,5 +1,4 @@
 $(function () {
-  //값의 타입을 string으로 변경하는 함수
   function transferValueToString(value) {
     if (!typeof value === 'string') {
       let stringValueType = value.toString();
@@ -9,25 +8,6 @@ $(function () {
   }
 
   function transferValueToNumber(value) {
-    // let NumberValueType;
-
-    // if (value === ' ') {
-    //   NumberValueType = 0;
-    //   return NumberValueType;
-    // } else if (typeof value === 'object') {
-    //   NumberValueType = parseInt(value?.itemdepth);
-    //   console.log('NumberValueType for object', NumberValueType);
-    //   console.log('typeof NumberValueType', typeof NumberValueType);
-    //   return NumberValueType;
-    // }
-
-    // NumberValueType = parseInt(value);
-    // console.log(
-    //   "NumberValueType for not both '  ' and object",
-    //   NumberValueType
-    // );
-    // return NumberValueType;
-
     if (value === ' ') return 0;
     return typeof value === 'object' ? value['itemdepth'] : parseInt(value);
   }
@@ -195,7 +175,6 @@ $(function () {
           return;
         }
         let CheckedCurrentDepthNum;
-
         let iteratingThisDOM = $(this);
         let currentCheckedThisItem = $(this).parent().parent();
 
